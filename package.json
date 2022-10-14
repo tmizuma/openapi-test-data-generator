@@ -1,0 +1,37 @@
+{
+  "name": "otdgen",
+  "version": "1.0.0",
+  "description": "The script outputs test data from the OpenApi schema file to the folder specified by the argument.",
+  "main": "index.js",
+  "scripts": {
+    "format": "prettier --write src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tmizuma/openapi-test-data-generator"
+  },
+  "author": "Takuya Mizuma <worksap2011@gmail.com> (https://whnyab.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tmizuma/openapi-test-data-generator/issues"
+  },
+  "homepage": "https://github.com/tmizuma/openapi-test-data-generator",
+  "type": "module",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "commander": "^9.4.1",
+    "conf": "^10.2.0",
+    "ejs": "^3.1.8",
+    "js-yaml": "^4.1.0",
+    "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.25.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "^17.0.0",
+    "prettier": "^2.7.1"
+  },
+  "bin": {
+    "otdgen": "./index.js"
+  }
+}
