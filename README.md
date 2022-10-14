@@ -13,7 +13,7 @@ $ npm install otdgen
 - Example
 ```bash
 $ mkdir output # create output folder
-$ osamgem generate -i example-openapi.yaml -o output/
+$ otdgen generate -i example-openapi.yaml -o output/
 output: ==> output/Employee.ts
 output: ==> output/Profile.ts
 ```
