@@ -1,6 +1,6 @@
 # OpenAPI test data generator from OpenApi schema for Javascript/TypeScript (otdgen)
 
-`otdgen` generates JavaScript/TypeScript test data from the OpenApi schema file(yaml) to the folder specified by the argument.
+`otdgen`はOpenApi(yaml)のスキーマ定義からJavaScript/TypeScriptのテストデータを生成します。
 
 ### Install the CLI
 
@@ -18,7 +18,7 @@ output: ==> output/Employee.ts
 output: ==> output/Profile.ts
 ```
 
-- You can find test codes as follow from openapi yaml file.
+- OpenApiのスキーマ定義から以下のようなファイルを生成します。
 
 ```ts
 // *-- output/Employee.ts --*
@@ -45,12 +45,9 @@ export const profileList = [profile_0,profile_1,profile_2]
 
 ```
 
-Two variables will be generated. The first one is the test data based on a schema definition in OpenApi.
-The second one is an array type data of the first one.
-You can control the number of elements in the array with `-n` option.(default: 3)
+ここでは2つの変数が生成されます。一つは、OpenApiのスキーマ定義に基づくテストデータです。二つ目は、一つ目の変数の配列型を生成します。この配列の要素数(テストデータの件数)は`-n`オプションでコントロールが可能です。(デフォルトは3)
 
-
-- `example-openapi.yaml` as source
+- 定義ファイル `example-openapi.yaml`
 ```yaml
 openapi: 3.0.0
 components:
@@ -101,7 +98,7 @@ Options:
   -i, --input <path>
   -o, --output <path>
   -n, --number-of-array-data <number>
-  -ext, --extension <output file extension>
+  -ext, --extension <export file extension>
   -h, --help                                 display help for command
 ```
 
@@ -109,7 +106,7 @@ Options:
 
 | Options | Description |  Default |Required
 | --- | --- | :---: | :---: |
-| -i, --input \<OpenApi yaml file path\> | The path of OpenApi yaml file | - |● |
-| -o, --output \<Typescript output path\> |The path of output folder | - |● |
-| -n, --number-of-array-data \<the number of array type test data\> | The number of array type test data | 3 | - |
-| -ext, --extension \<output file extension\> | output file extension `.ts` \| `.js` | `.ts` | - |
+| -i, --input \<OpenApi yaml file path\> | OpenApiのスキーマファイルのパス | - |● |
+| -o, --output \<Typescript / JavasSript output path\> | tsファイル、もしくはjsファイルの出力先フォルダパス | - |● |
+| -n, --number-of-array-data \<the number of array type test data\> | テストデータ配列の要素数 | 3 | - |
+| -ext, --extension \<output file extension\> | 出力拡張子 `.ts` \| `.js` | `.ts` | - |
