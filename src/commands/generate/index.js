@@ -9,7 +9,6 @@ export const generate = async(args) => {
   const inputPath = args.input;
   const outputPath =
     args.output.slice(-1) === "/" ? args.output.slice(0, -1) : args.output;
-
   if (!(await fs.existsSync(inputPath))) {
     console.log(chalk.red.bold(`${inputPath}: No such file or directory`));
     return null;
@@ -18,7 +17,6 @@ export const generate = async(args) => {
     console.log(chalk.red.bold(`${outputPath}: No such file or directory`));
     return null;
   }
-
   const yaml = await parse(path.resolve(process.cwd(), inputPath));
   if (yaml === null) process.exit(1);
 
@@ -34,4 +32,5 @@ export const generate = async(args) => {
   sampleData.forEach((v, k) => {
     createFileBySampleData(k, v, outputPath);
   });
+  return sampleData
 };

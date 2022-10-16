@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generate-command snapshot test 1`] = `
+{
+  "Employee": {
+    "companyId": 656094,
+    "id": "onk1sgeui8g",
+    "name": "John Doe",
+    "profile": {
+      "hobby": "watching movies",
+      "sex": "MALE",
+    },
+    "role": "ENGINEER",
+  },
+  "Profile": {
+    "hobby": "watching movies",
+    "sex": "MALE",
+  },
+}
+`;

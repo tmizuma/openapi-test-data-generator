@@ -1,0 +1,37 @@
+openapi: 3.0.0
+components:
+  schemas:
+    Employee:
+      title: Employee
+      type: object
+      description: Employee Info
+      properties:
+        id:
+          type: string
+        companyId:
+          type: number
+        role:
+          type: string
+          example: ENGINEER
+          enum:
+            - MANAGER
+            - ENGINEER
+            - ASSISTANT
+        name:
+          type: string
+          example: John Doe
+        profile:
+          $ref: '#/components/schemas/Profile'
+    Profile:
+      title: Profile
+      type: object
+      properties:
+        sex:
+          type: string
+          enum:
+            - MALE
+            - FEMALE
+            - ELSE
+        hobby:
+          type: string
+          example: watching movies
