@@ -13,6 +13,16 @@
   },
   "author": "Takuya Mizuma <worksap2011@gmail.com> (https://whnyab.com)",
   "license": "MIT",
+  "keywords": [
+    "otdgen",
+    "generator",
+    "openapi",
+    "api",
+    "js",
+    "javascript",
+    "ts",
+    "typescript"
+  ],
   "bugs": {
     "url": "https://github.com/tmizuma/openapi-test-data-generator/issues"
   },
