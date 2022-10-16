@@ -22,7 +22,7 @@
     "hooks": {
       "pre-commit": "npm run format"
     }
-  }
+  },
   "dependencies": {
     "chalk": "^4.1.0",
     "commander": "^9.4.1",
