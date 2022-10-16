@@ -5,10 +5,19 @@ import { createFileBySampleData } from "./output.js";
 import { createSampleDataJson } from "./data.js";
 import chalk from "chalk";
 
+const defaultNumberOfArrayData = 3
+
+/**
+ * generate test data
+ * @param {*} args 
+ * @returns {Map}
+ */
 export const generate = async(args) => {
   const inputPath = args.input;
   const outputPath =
     args.output.slice(-1) === "/" ? args.output.slice(0, -1) : args.output;
+  const numberOfArrayTestData = args["numberOfArrayData"] ? args["numberOfArrayData"] : defaultNumberOfArrayData
+  const extension = args["extension"] === ".js" ? args["extension"] : ".ts"
   if (!(await fs.existsSync(inputPath))) {
     console.log(chalk.red.bold(`${inputPath}: No such file or directory`));
     return null;
@@ -26,11 +35,13 @@ export const generate = async(args) => {
   const sampleData = new Map();
   schemas.forEach((s) => {
     const name = s.replaceAll(".yaml", "");
-    sampleData.set(name, createSampleDataJson(yaml.components.schemas, name));
+    sampleData.set(name, createSampleDataJson(yaml.components.schemas, name, {
+      n: numberOfArrayTestData
+    }));
   });
 
-  sampleData.forEach((v, k) => {
-    createFileBySampleData(k, v, outputPath);
+  sampleData.forEach(async(v, k) => {
+    await createFileBySampleData(k, v, outputPath, extension);
   });
   return sampleData
 };

@@ -10,6 +10,8 @@ program
   )
   .requiredOption("-i, --input <path>")
   .requiredOption("-o, --output <path>")
+  .option("-n, --number-of-array-data <number>")
+  .option("-ext, --extension <export file extension>")
   .action(generate);
 
 program.parse(process.argv);
