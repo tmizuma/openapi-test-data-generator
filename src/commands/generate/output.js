@@ -9,17 +9,22 @@ const capitalize = (str) => {
   return str.charAt(0).toLowerCase() + str.slice(1);
 };
 
-const __filename = fileURLToPath(
-  import.meta.url);
+const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export const createFileBySampleData = async(name, properties, outputPath, extension) => {
+export const createFileBySampleData = async (
+  name,
+  properties,
+  outputPath,
+  extension
+) => {
   const fileName = `${name}${extension}`;
   const code = ejs.render(
     fs.readFileSync(
       path.resolve(process.cwd(), `${__dirname}/template/test_data.ejs`),
       "utf-8"
-    ), {
+    ),
+    {
       name: capitalize(name),
       properties,
     }

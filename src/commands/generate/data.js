@@ -2,7 +2,7 @@ import { getRandomYmd, getRandomYmdhhmmss } from "./util.js";
 
 export const createSampleDataJson = (schemas, name, options) => {
   const schema = schemas[name];
-  const numberOfArray = options.n
+  const numberOfArray = options.n;
   const properties = schema.properties;
   const result = [];
   if (schema.$ref) {
@@ -11,10 +11,10 @@ export const createSampleDataJson = (schemas, name, options) => {
     return result;
   }
   for (let i = 0; i < numberOfArray; i++) {
-    const element = {}
+    const element = {};
     Object.keys(properties).forEach((key) => {
       const property = properties[key];
-      let value
+      let value;
       if (property.enum && property.enum.length > 0) {
         value = `${property.enum[0]}`;
       }
@@ -22,7 +22,8 @@ export const createSampleDataJson = (schemas, name, options) => {
       if (property.$ref) {
         value = createSampleDataJson(
           schemas,
-          property.$ref.replace("#/components/schemas/", ""), {...options, n: 1 }
+          property.$ref.replace("#/components/schemas/", ""),
+          { ...options, n: 1 }
         )[0];
       }
       if (value === undefined) {
@@ -60,7 +61,7 @@ export const createSampleDataJson = (schemas, name, options) => {
       }
       element[key] = value;
     });
-    result.push(element)
+    result.push(element);
   }
   return result;
 };

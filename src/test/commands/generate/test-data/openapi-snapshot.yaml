@@ -21,7 +21,7 @@ components:
           type: string
           example: John Doe
         profile:
-          $ref: '#/components/schemas/Profile'
+          $ref: "#/components/schemas/Profile"
     Profile:
       title: Profile
       type: object
