@@ -29,15 +29,12 @@ export const createFileBySampleData = async (
       properties,
     }
   );
-  fs.writeFile(`${outputPath}/${fileName}`, code, "utf8", (err) => {
-    if (err) {
-      console.log(
-        chalk.red.bold(
-          `[ERROR]: ==> failed to output ${outputPath}/${fileName}`
-        )
-      );
-    } else {
-      console.log(chalk.green.bold(`output: ==> ${outputPath}/${fileName}`));
-    }
-  });
+  try {
+    await fs.promises.writeFile(`${outputPath}/${fileName}`, code, "utf8");
+    console.log(chalk.green.bold(`output: ==> ${outputPath}/${fileName}`));
+  } catch (e) {
+    console.log(
+      chalk.red.bold(`[ERROR]: ==> failed to output ${outputPath}/${fileName}`)
+    );
+  }
 };

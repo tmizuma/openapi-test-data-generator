@@ -91,20 +91,6 @@ components:
           example: watching movies
 ```
 
-```bash
-$ otdgen generate -help
-Usage: index generate [options]
-
-otdgen generates JavaScript/TypeScript test data from the OpenApi schema file(yaml) to the folder specified by the argument.
-
-Options:
-  -i, --input <path>
-  -o, --output <path>
-  -n, --number-of-array-data <number>
-  -ext, --extension <output file extension>
-  -h, --help                                 display help for command
-```
-
 ### Options
 
 | Options | Description |  Default |Required
@@ -113,3 +99,4 @@ Options:
 | -o, --output \<Typescript output path\> |The path of output folder | - |● |
 | -n, --number-of-array-data \<the number of array type test data\> | The number of array type test data | 3 | - |
 | -ext, --extension \<output file extension\> | output file extension `.ts` \| `.js` | `.ts` | - |
+| -ignore, --ignore \<ignore schema list\> | ignore schema list separated by commas `e.g) -ignore Employee,Profile` | - | - |

@@ -12,6 +12,7 @@ program
   .requiredOption("-o, --output <path>")
   .option("-n, --number-of-array-data <number>")
   .option("-ext, --extension <output file extension>")
+  .option("-ignore, --ignore <ignore schema list separated by commas>")
   .action(generate);
 
 program.parse(process.argv);

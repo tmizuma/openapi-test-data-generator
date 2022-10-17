@@ -39,8 +39,10 @@ describe("generate-command", () => {
       numberOfArrayData: 3,
       extension: ".ts",
     });
-    const exists = fs.existsSync(`${outputFilesPath}/Employee.ts`);
-    expect(exists).toBe(true);
+    expect(fs.existsSync(`${outputFilesPath}/Employee.ts`)).toBe(true);
+    expect(fs.existsSync(`${outputFilesPath}/Profile.ts`)).toBe(true);
+    expect(fs.existsSync(`${outputFilesPath}/Employee.js`)).toBe(false);
+    expect(fs.existsSync(`${outputFilesPath}/Profile.js`)).toBe(false);
   });
   test("Check if there are correct extension(.js) files", async () => {
     await generate({
@@ -49,7 +51,31 @@ describe("generate-command", () => {
       numberOfArrayData: 3,
       extension: ".js",
     });
-    const exists = fs.existsSync(`${outputFilesPath}/Employee.js`);
-    expect(exists).toBe(true);
+    expect(fs.existsSync(`${outputFilesPath}/Employee.ts`)).toBe(false);
+    expect(fs.existsSync(`${outputFilesPath}/Profile.ts`)).toBe(false);
+    expect(fs.existsSync(`${outputFilesPath}/Employee.js`)).toBe(true);
+    expect(fs.existsSync(`${outputFilesPath}/Profile.js`)).toBe(true);
+  });
+
+  test("-ignore option", async () => {
+    await generate({
+      input: `${__dirname}/test-data/openapi-snapshot.yaml`,
+      output: outputFilesPath,
+      numberOfArrayData: 3,
+      ignore: "Employee",
+    });
+    expect(fs.existsSync(`${outputFilesPath}/Employee.ts`)).toBe(false);
+    expect(fs.existsSync(`${outputFilesPath}/Profile.ts`)).toBe(true);
+  });
+
+  test("-ignore: multiple ignore", async () => {
+    await generate({
+      input: `${__dirname}/test-data/openapi-snapshot.yaml`,
+      output: outputFilesPath,
+      numberOfArrayData: 3,
+      ignore: "Employee, Profile",
+    });
+    expect(fs.existsSync(`${outputFilesPath}/Employee.ts`)).toBe(false);
+    expect(fs.existsSync(`${outputFilesPath}/Profile.ts`)).toBe(false);
   });
 });
