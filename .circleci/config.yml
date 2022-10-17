@@ -1,0 +1,25 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
+      - run:
+          name: System information
+          command: |
+            echo "Node $(node -v)"
+      - run:
+          name: Install dependencies
+          command: |
+            npm install
+      - run:
+          name: Test
+          command: |
+            npm run test
+
+workflows:
+  unit_test:
+    jobs:
+      - test
