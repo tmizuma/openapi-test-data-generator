@@ -12,15 +12,16 @@ const defaultNumberOfArrayData = 3;
  * @param {*} args
  * @returns {Map}
  */
-export const generate = async(args) => {
+export const generate = async (args) => {
   const inputPath = args.input;
   const outputPath =
     args.output.slice(-1) === "/" ? args.output.slice(0, -1) : args.output;
-  const numberOfArrayTestData = args["numberOfArrayData"] ?
-    args["numberOfArrayData"] :
-    defaultNumberOfArrayData;
-  const ignoreList = args.ignore ?
-    args.ignore.replaceAll(" ", "").split(",") : [];
+  const numberOfArrayTestData = args["numberOfArrayData"]
+    ? args["numberOfArrayData"]
+    : defaultNumberOfArrayData;
+  const ignoreList = args.ignore
+    ? args.ignore.replaceAll(" ", "").split(",")
+    : [];
   const extension = args["extension"] === ".js" ? args["extension"] : ".ts";
   if (!(await fs.existsSync(inputPath))) {
     Logger.info(`${inputPath}: No such file or directory`);
@@ -35,7 +36,7 @@ export const generate = async(args) => {
 
   const schemas = createSchemas(yaml);
   if (schemas === null) {
-    Logger.error("Unexpected yaml type")
+    Logger.error("Unexpected yaml type");
     process.exit(1);
   }
   const sampleData = new Map();
@@ -49,9 +50,7 @@ export const generate = async(args) => {
         })
       );
     } else {
-      Logger.warn(
-        `[ignore] output: ==> ${outputPath}/${name}${extension}`
-      );
+      Logger.warn(`[ignore] output: ==> ${outputPath}/${name}${extension}`);
     }
   });
   for (let [k, v] of sampleData) {

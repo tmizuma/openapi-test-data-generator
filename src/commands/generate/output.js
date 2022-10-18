@@ -9,11 +9,10 @@ const capitalize = (str) => {
   return str.charAt(0).toLowerCase() + str.slice(1);
 };
 
-const __filename = fileURLToPath(
-  import.meta.url);
+const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export const createFileBySampleData = async(
+export const createFileBySampleData = async (
   name,
   properties,
   outputPath,
@@ -24,7 +23,8 @@ export const createFileBySampleData = async(
     fs.readFileSync(
       path.resolve(process.cwd(), `${__dirname}/template/test_data.ejs`),
       "utf-8"
-    ), {
+    ),
+    {
       name: capitalize(name),
       properties,
     }
@@ -33,6 +33,6 @@ export const createFileBySampleData = async(
     await fs.promises.writeFile(`${outputPath}/${fileName}`, code, "utf8");
     Logger.info(`output: ==> ${outputPath}/${fileName}`);
   } catch (e) {
-    Logger.error(`[ERROR]: ==> failed to output ${outputPath}/${fileName}`)
+    Logger.error(`[ERROR]: ==> failed to output ${outputPath}/${fileName}`);
   }
 };
