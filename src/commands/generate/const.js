@@ -1,0 +1,1 @@
+export const DEFAULT_MAX_RANDOM_VALUE = 1000000

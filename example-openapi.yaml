@@ -8,6 +8,8 @@ components:
       properties:
         id:
           type: string
+          minLength: 5
+          maxLength: 10
         companyId:
           type: number
         role:
@@ -26,6 +28,10 @@ components:
       title: Profile
       type: object
       properties:
+        age:
+          type: number
+          minimum: 18
+          maximum: 50
         sex:
           type: string
           enum:

@@ -27,24 +27,24 @@ output: ==> output/Profile.ts
 // *-- output/Employee.ts --*
 
 //  This file was automatically generated and should not be edited.
-export const employee = {"id":"8h35rsc7tq","companyId":757282,"role":"ENGINEER","name":"John Doe","profile":{"sex":"MALE","hobby":"watching movies"}}
+export const employee = {"id":"w6i0d3kn","companyId":277202,"role":"ENGINEER","name":"John Doe","profile":{"age":48,"sex":"ELSE","hobby":"watching movies"}}
 // employee is the same as employee_0
-const employee_0 = {"id":"8h35rsc7tq","companyId":757282,"role":"ENGINEER","name":"John Doe","profile":{"sex":"MALE","hobby":"watching movies"}}
-const employee_1 = {"id":"92k4v6j6pgo","companyId":687567,"role":"ENGINEER","name":"John Doe","profile":{"sex":"MALE","hobby":"watching movies"}}
-const employee_2 = {"id":"53so385bm1g","companyId":483375,"role":"ENGINEER","name":"John Doe","profile":{"sex":"MALE","hobby":"watching movies"}}
+const employee0 = {"id":"w6i0d3kn","companyId":277202,"role":"ENGINEER","name":"John Doe","profile":{"age":48,"sex":"ELSE","hobby":"watching movies"}}
+const employee1 = {"id":"o6nog0r","companyId":531517,"role":"ENGINEER","name":"John Doe","profile":{"age":30,"sex":"MALE","hobby":"watching movies"}}
+const employee2 = {"id":"l6p52q","companyId":181853,"role":"ENGINEER","name":"John Doe","profile":{"age":38,"sex":"FEMALE","hobby":"watching movies"}}
 
-export const employeeList = [employee_0,employee_1,employee_2]
+export const employeeList = [employee0,employee1,employee2]
 
 // *-- output/Profile.ts --*
 
 //  This file was automatically generated and should not be edited.
-export const profile = {"sex":"MALE","hobby":"watching movies"}
+export const profile = {"age":29,"sex":"ELSE","hobby":"watching movies"}
 // profile is the same as profile_0
-const profile_0 = {"sex":"MALE","hobby":"watching movies"}
-const profile_1 = {"sex":"MALE","hobby":"watching movies"}
-const profile_2 = {"sex":"MALE","hobby":"watching movies"}
+const profile0 = {"age":29,"sex":"ELSE","hobby":"watching movies"}
+const profile1 = {"age":20,"sex":"ELSE","hobby":"watching movies"}
+const profile2 = {"age":22,"sex":"ELSE","hobby":"watching movies"}
 
-export const profileList = [profile_0,profile_1,profile_2]
+export const profileList = [profile0,profile1,profile2]
 
 ```
 
@@ -62,6 +62,8 @@ components:
       properties:
         id:
           type: string
+          minLength: 5
+          maxLength: 10
         companyId:
           type: number
         role:
@@ -80,6 +82,10 @@ components:
       title: Profile
       type: object
       properties:
+        age:
+          type: number
+          minimum: 18
+          maximum: 50
         sex:
           type: string
           enum:

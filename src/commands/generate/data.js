@@ -1,4 +1,4 @@
-import { getRandomYmd, getRandomYmdhhmmss } from "./util.js";
+import { createRandomNumberByRange, createRandomStringByRange, getRandomYmd, getRandomYmdhhmmss } from "./util.js";
 
 export const createSampleDataJson = (schemas, name, options) => {
   const schema = schemas[name];
@@ -16,14 +16,14 @@ export const createSampleDataJson = (schemas, name, options) => {
       const property = properties[key];
       let value;
       if (property.enum && property.enum.length > 0) {
-        value = `${property.enum[0]}`;
+        const i = Math.floor(Math.random() * property.enum.length)
+        value = `${property.enum[i]}`;
       }
       value = property.example ? property.example : value;
       if (property.$ref) {
         value = createSampleDataJson(
           schemas,
-          property.$ref.replace("#/components/schemas/", ""),
-          { ...options, n: 1 }
+          property.$ref.replace("#/components/schemas/", ""), {...options, n: 1 }
         )[0];
       }
       if (value === undefined) {
@@ -36,23 +36,23 @@ export const createSampleDataJson = (schemas, name, options) => {
               // create a random date data
               value = getRandomYmd("2000/01/01");
             } else {
-              value = Math.random().toString(32).substring(2);
+              value = createRandomStringByRange(property.minLength, property.maxLength)
             }
             break;
           case "number":
             // create a random number
-            value = Math.round(Math.random() * 1000000);
+            value = createRandomNumberByRange(property.minimum, property.maximum);
             break;
           case "integer":
-            value = Math.round(Math.random() * 1000000);
+            // create a random number
+            value = createRandomNumberByRange(property.minimum, property.maximum);
             break;
           case "array":
             // create a empty array
             value = [];
             break;
           case "boolean":
-            // always true when type is boolean
-            value = true;
+            value = Math.random() > 1 / 2;
             break;
           default:
             // otherwise; {}

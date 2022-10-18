@@ -3,7 +3,7 @@ import path from "path";
 import fs from "fs";
 import { createFileBySampleData } from "./output.js";
 import { createSampleDataJson } from "./data.js";
-import chalk from "chalk";
+import { Logger } from "./logger.js";
 
 const defaultNumberOfArrayData = 3;
 
@@ -12,31 +12,32 @@ const defaultNumberOfArrayData = 3;
  * @param {*} args
  * @returns {Map}
  */
-export const generate = async (args) => {
+export const generate = async(args) => {
   const inputPath = args.input;
   const outputPath =
     args.output.slice(-1) === "/" ? args.output.slice(0, -1) : args.output;
-  const numberOfArrayTestData = args["numberOfArrayData"]
-    ? args["numberOfArrayData"]
-    : defaultNumberOfArrayData;
-  const ignoreList = args.ignore
-    ? args.ignore.replaceAll(" ", "").split(",")
-    : [];
+  const numberOfArrayTestData = args["numberOfArrayData"] ?
+    args["numberOfArrayData"] :
+    defaultNumberOfArrayData;
+  const ignoreList = args.ignore ?
+    args.ignore.replaceAll(" ", "").split(",") : [];
   const extension = args["extension"] === ".js" ? args["extension"] : ".ts";
   if (!(await fs.existsSync(inputPath))) {
-    console.log(chalk.red.bold(`${inputPath}: No such file or directory`));
+    Logger.info(`${inputPath}: No such file or directory`);
     return null;
   }
   if (!(await fs.existsSync(outputPath))) {
-    console.log(chalk.red.bold(`${outputPath}: No such file or directory`));
+    Logger.info(`${outputPath}: No such file or directory`);
     return null;
   }
   const yaml = await parse(path.resolve(process.cwd(), inputPath));
   if (yaml === null) process.exit(1);
 
   const schemas = createSchemas(yaml);
-  if (schemas === null) process.exit(1);
-
+  if (schemas === null) {
+    Logger.error("Unexpected yaml type")
+    process.exit(1);
+  }
   const sampleData = new Map();
   schemas.forEach((s) => {
     const name = s.replaceAll(".yaml", "");
@@ -48,10 +49,8 @@ export const generate = async (args) => {
         })
       );
     } else {
-      console.log(
-        chalk.yellow.bold(
-          `[ignore] output: ==> ${outputPath}/${name}${extension}`
-        )
+      Logger.warn(
+        `[ignore] output: ==> ${outputPath}/${name}${extension}`
       );
     }
   });

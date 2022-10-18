@@ -2,7 +2,7 @@
 export const <%= name -%> = <%- JSON.stringify(properties[0]) %>
 // <%= name -%> is the same as <%= name -%>_0
 <% for (let i=0; i < properties.length; i++) { -%>
-const <%= `${name}_${i}` -%> = <%- JSON.stringify(properties[i]) %>
+const <%= `${name}${i}` -%> = <%- JSON.stringify(properties[i]) %>
 <% } -%>
 
-export const <%= name %>List = [<%= properties.map((_,k) => `${name}_${k}`).join(",") -%>]
+export const <%= name %>List = [<%= properties.map((_,k) => `${name}${k}`).join(",") -%>]
