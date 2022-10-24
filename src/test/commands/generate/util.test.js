@@ -1,7 +1,11 @@
 import { jest } from "@jest/globals";
 import {
   createRandomNumberByRange,
+  createRandomNumberByMaxValueStateless,
   createRandomStringByRange,
+  createRandomStringByMaxLengtheStateless,
+  getRandomYmdStateless,
+  getRandomYmdhhmmssStateless,
 } from "../../../commands/generate/util";
 
 jest.mock("fs");
@@ -23,5 +27,31 @@ describe("util", () => {
     ).toBeGreaterThanOrEqual(0);
     expect(() => createRandomNumberByRange(-1, -2)).toThrow(Error);
     expect(() => createRandomNumberByRange(10, 1)).toThrow(Error);
+  });
+
+  test("createRandomStringByMaxLengtheStateless", async () => {
+    const maxLength = 32;
+    expect(createRandomStringByMaxLengtheStateless("key1", 10)).toBe(
+      "c2add694bf"
+    );
+    expect(
+      createRandomStringByMaxLengtheStateless("key1", maxLength).length
+    ).toBe(maxLength);
+  });
+
+  test("createRandomNumberByMaxValueStateless", async () => {
+    expect(
+      createRandomNumberByMaxValueStateless("EmployeeId_001", 10, 100)
+    ).toBe(91);
+  });
+
+  test("getRandomYmdStateless", async () => {
+    expect(getRandomYmdStateless("2000/01/01", "hashedkey")).toBe("2011-01-15");
+  });
+
+  test("getRandomYmdhhmmssStateless", async () => {
+    expect(getRandomYmdhhmmssStateless("2000/01/01", "hashedkey")).toBe(
+      "2011-01-15 08:08:08"
+    );
   });
 });

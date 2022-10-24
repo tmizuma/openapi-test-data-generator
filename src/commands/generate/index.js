@@ -14,6 +14,7 @@ const defaultNumberOfArrayData = 3;
  */
 export const generate = async (args) => {
   const inputPath = args.input;
+  const stateless = args.stateless === undefined ? true : args.stateless; // default: true
   const outputPath =
     args.output.slice(-1) === "/" ? args.output.slice(0, -1) : args.output;
   const numberOfArrayTestData = args["numberOfArrayData"]
@@ -47,6 +48,7 @@ export const generate = async (args) => {
         name,
         createSampleDataJson(yaml.components.schemas, name, {
           n: numberOfArrayTestData,
+          stateless,
         })
       );
     } else {
@@ -56,6 +58,5 @@ export const generate = async (args) => {
   for (let [k, v] of sampleData) {
     await createFileBySampleData(k, v, outputPath, extension);
   }
-
   return sampleData;
 };

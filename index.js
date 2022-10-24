@@ -13,6 +13,7 @@ program
   .option("-n, --number-of-array-data <number>")
   .option("-ext, --extension <output file extension>")
   .option("-ignore, --ignore <ignore schema list separated by commas>")
+  .option("-s, --stateless <true | false>")
   .action(generate);
 
 program.parse(process.argv);

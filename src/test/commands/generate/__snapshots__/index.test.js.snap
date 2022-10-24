@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generate-command stateless snapshot test 1`] = `
+Map {
+  "Employee" => [
+    {
+      "companyId": 999,
+      "id": "63db489e5f",
+      "name": "John Doe",
+      "profile": {
+        "age": 46,
+        "birthdate": "2011-04-12",
+        "hobby": "watching movies",
+        "sex": "MALE",
+      },
+      "registdate": "2002-11-17 11:47:47",
+      "role": "ENGINEER",
+    },
+    {
+      "companyId": 999,
+      "id": "f9983a8547",
+      "name": "John Doe",
+      "profile": {
+        "age": 48,
+        "birthdate": "2017-12-22",
+        "hobby": "watching movies",
+        "sex": "MALE",
+      },
+      "registdate": "2015-10-15 04:04:04",
+      "role": "ENGINEER",
+    },
+    {
+      "companyId": 999,
+      "id": "dea61a71e5",
+      "name": "John Doe",
+      "profile": {
+        "age": 32,
+        "birthdate": "2024-04-09",
+        "hobby": "watching movies",
+        "sex": "MALE",
+      },
+      "registdate": "2022-01-08 22:22:22",
+      "role": "ENGINEER",
+    },
+  ],
+  "Profile" => [
+    {
+      "age": 34,
+      "birthdate": "2000-06-30",
+      "hobby": "watching movies",
+      "sex": "MALE",
+    },
+    {
+      "age": 29,
+      "birthdate": "2013-01-07",
+      "hobby": "watching movies",
+      "sex": "FEMALE",
+    },
+    {
+      "age": 36,
+      "birthdate": "2005-02-03",
+      "hobby": "watching movies",
+      "sex": "ELSE",
+    },
+  ],
+}
+`;

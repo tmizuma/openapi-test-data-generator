@@ -78,4 +78,15 @@ describe("generate-command", () => {
     expect(fs.existsSync(`${outputFilesPath}/Employee.ts`)).toBe(false);
     expect(fs.existsSync(`${outputFilesPath}/Profile.ts`)).toBe(false);
   });
+
+  test("stateless snapshot test", async () => {
+    const result = await generate({
+      input: `${__dirname}/test-data/openapi-snapshot.yaml`,
+      output: outputFilesPath,
+      numberOfArrayData: 3,
+      extension: ".ts",
+      stateless: true,
+    });
+    expect(result).toMatchSnapshot();
+  });
 });

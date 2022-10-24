@@ -12,6 +12,7 @@ components:
           maxLength: 10
         companyId:
           type: number
+          example: 999
         role:
           type: string
           example: ENGINEER
@@ -22,6 +23,9 @@ components:
         name:
           type: string
           example: John Doe
+        registdate:
+          type: string
+          format: date-time
         profile:
           $ref: '#/components/schemas/Profile'
     Profile:
@@ -32,6 +36,9 @@ components:
           type: number
           minimum: 18
           maximum: 50
+        birthdate:
+          type: string
+          format: date
         sex:
           type: string
           enum:
