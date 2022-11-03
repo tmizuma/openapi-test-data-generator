@@ -14,7 +14,7 @@ Map {
         "sex": "MALE",
       },
       "registdate": "2022-10-03 12:00:00",
-      "role": "ENGINEER_0",
+      "role": "MANAGER",
     },
     {
       "companyId": "999_1",
@@ -27,7 +27,7 @@ Map {
         "sex": "MALE",
       },
       "registdate": "2029-09-07 08:08:08",
-      "role": "ENGINEER_1",
+      "role": "ENGINEER",
     },
     {
       "companyId": "999_2",
@@ -40,7 +40,7 @@ Map {
         "sex": "MALE",
       },
       "registdate": "2011-11-22 11:59:59",
-      "role": "ENGINEER_2",
+      "role": "ASSISTANT",
     },
   ],
   "Profile" => [

@@ -20,9 +20,9 @@ import {
 export const createSampleDataJson = (schemas, name, options) => {
   const schema = schemas[name];
   const stateless = options.stateless;
-  const depthOfRecursion = options.depthOfRecursion
-    ? options.depthOfRecursion
-    : 0;
+  const depthOfRecursion = options.depthOfRecursion ?
+    options.depthOfRecursion :
+    0;
   const numberOfArray = options.n;
   const properties = schema.properties;
   const result = [];
@@ -49,14 +49,13 @@ export const createSampleDataJson = (schemas, name, options) => {
       }
 
       // if exists example data
-      sampleData = property.example ? `${property.example}_${i}` : sampleData;
+      sampleData = property.example && !(property.enum && property.enum.length > 0) ? `${property.example}_${i}` : sampleData;
 
       // create sample data recursively if the property type is $ref.
       if (property.$ref) {
         sampleData = createSampleDataJson(
           schemas,
-          property.$ref.replace("#/components/schemas/", ""),
-          { ...options, n: 1, depthOfRecursion: depthOfRecursion + 1 }
+          property.$ref.replace("#/components/schemas/", ""), {...options, n: 1, depthOfRecursion: depthOfRecursion + 1 }
         )[0];
       }
 
@@ -86,41 +85,41 @@ const createSampleDataFromPropertyAttributes = (
     case "string":
       if (property.format === "date-time") {
         // create a random date-time data
-        value = stateless
-          ? getRandomYmdhhmmssStateless("2000/01/01", statelessHashKey)
-          : getRandomYmdhhmmss("2000/01/01");
+        value = stateless ?
+          getRandomYmdhhmmssStateless("2000/01/01", statelessHashKey) :
+          getRandomYmdhhmmss("2000/01/01");
       } else if (property.format === "date") {
         // create a random date data
-        value = stateless
-          ? getRandomYmdStateless("2000/01/01", statelessHashKey)
-          : getRandomYmd("2000/01/01");
+        value = stateless ?
+          getRandomYmdStateless("2000/01/01", statelessHashKey) :
+          getRandomYmd("2000/01/01");
       } else {
-        value = stateless
-          ? createRandomStringByMaxLengtheStateless(
-              statelessHashKey,
-              property.maxLength
-            )
-          : createRandomStringByRange(property.minLength, property.maxLength);
+        value = stateless ?
+          createRandomStringByMaxLengtheStateless(
+            statelessHashKey,
+            property.maxLength
+          ) :
+          createRandomStringByRange(property.minLength, property.maxLength);
       }
       break;
     case "number" || "integer":
       // create a random number
-      value = stateless
-        ? createRandomNumberByMaxValueStateless(
-            statelessHashKey,
-            property.minimum,
-            property.maximum
-          )
-        : createRandomNumberByRange(property.minimum, property.maximum);
+      value = stateless ?
+        createRandomNumberByMaxValueStateless(
+          statelessHashKey,
+          property.minimum,
+          property.maximum
+        ) :
+        createRandomNumberByRange(property.minimum, property.maximum);
       break;
     case "array":
       // create a empty array
       value = [];
       break;
     case "boolean":
-      value = stateless
-        ? createRandomBooleanStateless(statelessHashKey)
-        : Math.random() > 1 / 2;
+      value = stateless ?
+        createRandomBooleanStateless(statelessHashKey) :
+        Math.random() > 1 / 2;
       break;
     default:
       // otherwise; {}
