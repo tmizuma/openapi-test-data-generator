@@ -27,22 +27,90 @@ output: ==> output/Profile.ts
 // *-- output/Employee.ts --*
 
 //  This file was automatically generated and should not be edited.
-export const employee = {"id":"63db489e5f","companyId":"999_0","role":"ENGINEER_0","name":"John Doe_0","registdate":"2002-11-17 11:47:47","profile":{"age":46,"birthdate":"2011-04-12","sex":"MALE","hobby":"watching movies_0"}}
+export const employee = {
+	"id": "63db489e5f",
+	"companyId": "999_0",
+	"role": "ENGINEER_0",
+	"name": "John Doe_0",
+	"registdate": "2002-11-17 11:47:47",
+	"profile": {
+		"age": 46,
+		"birthdate": "2011-04-12",
+		"sex": "MALE",
+		"hobby": "watching movies_0"
+	}
+}
 // employee is the same as employee_0
-const employee0 = {"id":"63db489e5f","companyId":"999_0","role":"ENGINEER_0","name":"John Doe_0","registdate":"2002-11-17 11:47:47","profile":{"age":46,"birthdate":"2011-04-12","sex":"MALE","hobby":"watching movies_0"}}
-const employee1 = {"id":"f9983a8547","companyId":"999_1","role":"ENGINEER_1","name":"John Doe_1","registdate":"2015-10-15 04:04:04","profile":{"age":48,"birthdate":"2017-12-22","sex":"MALE","hobby":"watching movies_0"}}
-const employee2 = {"id":"dea61a71e5","companyId":"999_2","role":"ENGINEER_2","name":"John Doe_2","registdate":"2022-01-08 22:22:22","profile":{"age":32,"birthdate":"2024-04-09","sex":"MALE","hobby":"watching movies_0"}}
+const employee0 = {
+	"id": "63db489e5f",
+	"companyId": "999_0",
+	"role": "ENGINEER_0",
+	"name": "John Doe_0",
+	"registdate": "2002-11-17 11:47:47",
+	"profile": {
+		"age": 46,
+		"birthdate": "2011-04-12",
+		"sex": "MALE",
+		"hobby": "watching movies_0"
+	}
+}
+const employee1 = {
+	"id": "f9983a8547",
+	"companyId": "999_1",
+	"role": "ENGINEER_1",
+	"name": "John Doe_1",
+	"registdate": "2015-10-15 04:04:04",
+	"profile": {
+		"age": 48,
+		"birthdate": "2017-12-22",
+		"sex": "MALE",
+		"hobby": "watching movies_0"
+	}
+}
+const employee2 = {
+	"id": "dea61a71e5",
+	"companyId": "999_2",
+	"role": "ENGINEER_2",
+	"name": "John Doe_2",
+	"registdate": "2022-01-08 22:22:22",
+	"profile": {
+		"age": 32,
+		"birthdate": "2024-04-09",
+		"sex": "MALE",
+		"hobby": "watching movies_0"
+	}
+}
 
 export const employeeList = [employee0,employee1,employee2]
 
 // *-- output/Profile.ts --*
 
 //  This file was automatically generated and should not be edited.
-export const profile = {"age":34,"birthdate":"2000-06-30","sex":"MALE","hobby":"watching movies_0"}
+export const profile = {
+	"age": 34,
+	"birthdate": "2000-06-30",
+	"sex": "MALE",
+	"hobby": "watching movies_0"
+}
 // profile is the same as profile_0
-const profile0 = {"age":34,"birthdate":"2000-06-30","sex":"MALE","hobby":"watching movies_0"}
-const profile1 = {"age":29,"birthdate":"2013-01-07","sex":"FEMALE","hobby":"watching movies_1"}
-const profile2 = {"age":36,"birthdate":"2005-02-03","sex":"ELSE","hobby":"watching movies_2"}
+const profile0 = {
+	"age": 34,
+	"birthdate": "2000-06-30",
+	"sex": "MALE",
+	"hobby": "watching movies_0"
+}
+const profile1 = {
+	"age": 29,
+	"birthdate": "2013-01-07",
+	"sex": "FEMALE",
+	"hobby": "watching movies_1"
+}
+const profile2 = {
+	"age": 36,
+	"birthdate": "2005-02-03",
+	"sex": "ELSE",
+	"hobby": "watching movies_2"
+}
 
 export const profileList = [profile0,profile1,profile2]
 
