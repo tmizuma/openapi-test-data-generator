@@ -1,11 +1,9 @@
 import { parse, createSchemas } from "./parse.js";
 import path from "path";
-import fs from "fs";
-import { createFileBySampleData } from "./output.js";
-import { createSampleDataJson } from "./data.js";
-import { Logger } from "./logger.js";
-
-const defaultNumberOfArrayData = 3;
+import { exportFileBySampleData } from "./output.js";
+import { createSampleDataJson } from "./generator/sampledata.js";
+import { Logger } from "./logger/index.js";
+import { validate } from "./validator/index.js";
 
 /**
  * generate test data
@@ -13,38 +11,30 @@ const defaultNumberOfArrayData = 3;
  * @returns {Map}
  */
 export const generate = async (args) => {
-  const inputPath = args.input;
-  const stateless = args.stateless === undefined ? true : args.stateless; // default: true
-  const outputPath =
-    args.output.slice(-1) === "/" ? args.output.slice(0, -1) : args.output;
-  const numberOfArrayTestData = args["numberOfArrayData"]
-    ? args["numberOfArrayData"]
-    : defaultNumberOfArrayData;
-  const ignoreList = args.ignore
-    ? args.ignore.replaceAll(" ", "").split(",")
-    : [];
-  const extension = args["extension"] === ".js" ? args["extension"] : ".ts";
-  if (!(await fs.existsSync(inputPath))) {
-    Logger.info(`${inputPath}: No such file or directory`);
-    return null;
-  }
-  if (!(await fs.existsSync(outputPath))) {
-    Logger.info(`${outputPath}: No such file or directory`);
-    return null;
-  }
-  const yaml = await parse(path.resolve(process.cwd(), inputPath));
-  if (yaml === null) process.exit(1);
+  const {
+    inputPath,
+    outputPath,
+    stateless,
+    numberOfArrayTestData,
+    ignoreList,
+    extension,
+  } = await validate(args);
 
-  const schemas = createSchemas(yaml);
-  if (schemas === null) {
-    Logger.error("Unexpected yaml type");
+  const yaml = await parse(path.resolve(process.cwd(), inputPath));
+  if (yaml === null) {
+    Logger.error(`Unexpected yaml parse error occured!`);
     process.exit(1);
   }
-  const sampleData = new Map();
+  const schemas = createSchemas(yaml);
+  if (schemas === null) {
+    Logger.error("Unexpected yaml type. Schemas does not exists.");
+    process.exit(1);
+  }
+  const sampleDataMap = new Map();
   schemas.forEach((s) => {
     const name = s.replaceAll(".yaml", "");
     if (ignoreList.indexOf(name) === -1) {
-      sampleData.set(
+      sampleDataMap.set(
         name,
         createSampleDataJson(yaml.components.schemas, name, {
           n: numberOfArrayTestData,
@@ -55,8 +45,8 @@ export const generate = async (args) => {
       Logger.warn(`[ignore] output: ==> ${outputPath}/${name}${extension}`);
     }
   });
-  for (let [k, v] of sampleData) {
-    await createFileBySampleData(k, v, outputPath, extension);
+  for (let [k, v] of sampleDataMap) {
+    await exportFileBySampleData(k, v, outputPath, extension);
   }
-  return sampleData;
+  return sampleDataMap;
 };

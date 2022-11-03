@@ -2,7 +2,7 @@ import ejs from "ejs";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { Logger } from "./logger.js";
+import { Logger } from "./logger/index.js";
 
 const capitalize = (str) => {
   if (typeof str !== "string" || !str) return str;
@@ -12,7 +12,7 @@ const capitalize = (str) => {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export const createFileBySampleData = async (
+export const exportFileBySampleData = async (
   name,
   properties,
   outputPath,

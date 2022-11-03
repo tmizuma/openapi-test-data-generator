@@ -1,5 +1,5 @@
 import md5 from "md5";
-import { DEFAULT_MAX_RANDOM_VALUE, MAX_DAY_DIFF } from "./const.js";
+import { DEFAULT_MAX_RANDOM_VALUE, MAX_DAY_DIFF } from "../const/index.js";
 
 const createRandomByRangeAndSeed = (seed, min, max) => {
   if (min < 0 || max < 0 || min >= max) {

@@ -6,7 +6,7 @@ import {
   createRandomStringByMaxLengtheStateless,
   getRandomYmdStateless,
   getRandomYmdhhmmssStateless,
-} from "../../../commands/generate/util";
+} from "../../../commands/generate/utils";
 
 jest.mock("fs");
 

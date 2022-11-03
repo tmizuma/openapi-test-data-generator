@@ -1,8 +1,8 @@
 //  This file was automatically generated and should not be edited.
-export const <%= name -%> = <%- JSON.stringify(properties[0]) %>
+export const <%= name -%> = <%- JSON.stringify(properties[0], null, "\t") %>
 // <%= name -%> is the same as <%= name -%>_0
 <% for (let i=0; i < properties.length; i++) { -%>
-const <%= `${name}${i}` -%> = <%- JSON.stringify(properties[i]) %>
+const <%= `${name}${i}` -%> = <%- JSON.stringify(properties[i], null, "\t") %>
 <% } -%>
 
 export const <%= name %>List = [<%= properties.map((_,k) => `${name}${k}`).join(",") -%>]
