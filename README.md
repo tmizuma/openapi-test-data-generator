@@ -50,67 +50,13 @@ export const employee = {
 }
 // employee is the same as employee_0
 const employee0 = {
-	"id": "9c0f76ea11",
-	"companyId": "999_0",
-	"role": "MANAGER",
-	"name": "John Doe_0",
-	"registdate": "2022-10-03 12:00:00",
-	"profile": {
-		"age": 40,
-		"birthdate": "2026-08-28",
-		"sex": "MALE",
-		"hobby": [
-			"watching movies_0",
-			"watching movies_1",
-			"watching movies_2"
-		]
-	},
-	"department": {
-		"id": 4,
-		"name": "Marketing"
-	}
+	...
 }
 const employee1 = {
-	"id": "d1adcc3f59",
-	"companyId": "999_1",
-	"role": "ENGINEER",
-	"name": "John Doe_1",
-	"registdate": "2029-09-07 08:08:08",
-	"profile": {
-		"age": 40,
-		"birthdate": "2026-08-28",
-		"sex": "MALE",
-		"hobby": [
-			"watching movies_0",
-			"watching movies_1",
-			"watching movies_2"
-		]
-	},
-	"department": {
-		"id": 4,
-		"name": "Marketing"
-	}
+	...
 }
 const employee2 = {
-	"id": "a7e94f011e",
-	"companyId": "999_2",
-	"role": "ASSISTANT",
-	"name": "John Doe_2",
-	"registdate": "2011-11-22 11:59:59",
-	"profile": {
-		"age": 40,
-		"birthdate": "2026-08-28",
-		"sex": "MALE",
-		"hobby": [
-			"watching movies_0",
-			"watching movies_1",
-			"watching movies_2"
-		]
-	},
-	"department": {
-		"id": 4,
-		"name": "Marketing"
-	}
+	...
 }
 
 export const employeeList = [employee0,employee1,employee2]
@@ -130,34 +76,13 @@ export const profile = {
 }
 // profile is the same as profile_0
 const profile0 = {
-	"age": 46,
-	"birthdate": "2011-04-12",
-	"sex": "MALE",
-	"hobby": [
-		"watching movies_0",
-		"watching movies_1",
-		"watching movies_2"
-	]
+	...
 }
 const profile1 = {
-	"age": 48,
-	"birthdate": "2017-12-22",
-	"sex": "FEMALE",
-	"hobby": [
-		"watching movies_0",
-		"watching movies_1",
-		"watching movies_2"
-	]
+	...
 }
 const profile2 = {
-	"age": 32,
-	"birthdate": "2024-04-09",
-	"sex": "ELSE",
-	"hobby": [
-		"watching movies_0",
-		"watching movies_1",
-		"watching movies_2"
-	]
+	...
 }
 
 export const profileList = [profile0,profile1,profile2]
