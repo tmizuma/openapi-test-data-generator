@@ -5,18 +5,19 @@ import { jest } from "@jest/globals";
 import { fileURLToPath } from "url";
 
 jest.mock("fs");
-const __filename = fileURLToPath(import.meta.url);
+const __filename = fileURLToPath(
+  import.meta.url);
 const __dirname = path.dirname(__filename);
 const outputFilesPath = path.join(__dirname, "output");
 
 describe("generate-command", () => {
-  beforeEach(async () => {
+  beforeEach(async() => {
     fs.mkdirSync(outputFilesPath);
   });
-  afterEach(async () => {
+  afterEach(async() => {
     fs.rmSync(outputFilesPath, { recursive: true, force: true });
   });
-  test("The number of properties", async () => {
+  test("The number of properties", async() => {
     const result = await generate({
       input: `${__dirname}/test-data/openapi-snapshot.yaml`,
       output: outputFilesPath,
@@ -32,7 +33,7 @@ describe("generate-command", () => {
     expect(profile.length).toBe(3);
   });
 
-  test("Check if there are correct extension(.ts) files", async () => {
+  test("Check if there are correct extension(.ts) files", async() => {
     await generate({
       input: `${__dirname}/test-data/openapi-snapshot.yaml`,
       output: outputFilesPath,
@@ -44,7 +45,7 @@ describe("generate-command", () => {
     expect(fs.existsSync(`${outputFilesPath}/Employee.js`)).toBe(false);
     expect(fs.existsSync(`${outputFilesPath}/Profile.js`)).toBe(false);
   });
-  test("Check if there are correct extension(.js) files", async () => {
+  test("Check if there are correct extension(.js) files", async() => {
     await generate({
       input: `${__dirname}/test-data/openapi-snapshot.yaml`,
       output: outputFilesPath,
@@ -57,7 +58,7 @@ describe("generate-command", () => {
     expect(fs.existsSync(`${outputFilesPath}/Profile.js`)).toBe(true);
   });
 
-  test("-ignore option", async () => {
+  test("-ignore option", async() => {
     await generate({
       input: `${__dirname}/test-data/openapi-snapshot.yaml`,
       output: outputFilesPath,
@@ -68,7 +69,7 @@ describe("generate-command", () => {
     expect(fs.existsSync(`${outputFilesPath}/Profile.ts`)).toBe(true);
   });
 
-  test("-ignore: multiple ignore", async () => {
+  test("-ignore: multiple ignore", async() => {
     await generate({
       input: `${__dirname}/test-data/openapi-snapshot.yaml`,
       output: outputFilesPath,
@@ -79,13 +80,13 @@ describe("generate-command", () => {
     expect(fs.existsSync(`${outputFilesPath}/Profile.ts`)).toBe(false);
   });
 
-  test("stateless snapshot test", async () => {
+  test("stateless snapshot test", async() => {
     const result = await generate({
       input: `${__dirname}/test-data/openapi-snapshot.yaml`,
       output: outputFilesPath,
       numberOfArrayData: 3,
       extension: ".ts",
-      stateless: true,
+      stateless: "true",
     });
     expect(result).toMatchSnapshot();
   });

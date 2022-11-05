@@ -27,8 +27,8 @@ Map {
     {
       "companyId": "999_1",
       "department": {
-        "id": 4,
-        "name": "Marketing",
+        "id": 0,
+        "name": "Human Resouce",
       },
       "id": "d1adcc3f59",
       "name": "John Doe_1",
@@ -49,7 +49,7 @@ Map {
       "companyId": "999_2",
       "department": {
         "id": 4,
-        "name": "Marketing",
+        "name": "Development",
       },
       "id": "a7e94f011e",
       "name": "John Doe_2",

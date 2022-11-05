@@ -246,3 +246,4 @@ components:
 | -ext, --extension \<output file extension\> | output file extension `.ts` \| `.js` | `.ts` | - |
 | -ignore, --ignore \<ignore schema list\> | ignore schema list separated by commas `e.g) -ignore Employee,Profile` | - | - |
 | -s, --stateless \<true \| false\> | You can generate stateless random data. This option ensures to return same sample data when being given the same yaml definition. | true | - |
+| -es, --example-suffix \<true \| false\> | If the example attribute exists in yaml, whether or not the suffix is added to the test data. | true | - |

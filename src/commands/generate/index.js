@@ -10,7 +10,7 @@ import { validate } from "./validator/index.js";
  * @param {*} args
  * @returns {Map}
  */
-export const generate = async (args) => {
+export const generate = async(args) => {
   const {
     inputPath,
     outputPath,
@@ -18,6 +18,7 @@ export const generate = async (args) => {
     numberOfArrayTestData,
     ignoreList,
     extension,
+    exampleSuffix
   } = await validate(args);
 
   const yaml = await parse(path.resolve(process.cwd(), inputPath));
@@ -39,6 +40,7 @@ export const generate = async (args) => {
         createSampleDataJson(yaml.components.schemas, name, {
           n: numberOfArrayTestData,
           stateless,
+          exampleSuffix
         })
       );
     } else {

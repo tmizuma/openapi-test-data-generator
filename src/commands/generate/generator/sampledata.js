@@ -56,9 +56,10 @@ const createSampleDataFromProperties = (schemas, properties, name, depthOfRecurs
     }
 
     // if exists example data
+    const suffix = options.exampleSuffix ? `_${i}` : ""
     sampleData =
       property.example && !(property.enum && property.enum.length > 0) ?
-      `${property.example}_${i}` :
+      `${property.example}${suffix}` :
       sampleData;
 
     // create sample data recursively if the property type is $ref.
@@ -70,7 +71,7 @@ const createSampleDataFromProperties = (schemas, properties, name, depthOfRecurs
     }
 
     if (property.type === "object") {
-      sampleData = createSampleDataFromProperties(schemas, property.properties, name, depthOfRecursion, stateless, i)
+      sampleData = createSampleDataFromProperties(schemas, property.properties, name, depthOfRecursion, stateless, options, i)
     }
 
     // otherwise, create sample data from property attributes
@@ -79,7 +80,8 @@ const createSampleDataFromProperties = (schemas, properties, name, depthOfRecurs
       sampleData = createSampleDataFromPropertyAttributes(
         property,
         stateless,
-        statelessHashKey
+        options.exampleSuffix,
+        statelessHashKey,
       );
     }
     element[key] = sampleData;
@@ -90,7 +92,9 @@ const createSampleDataFromProperties = (schemas, properties, name, depthOfRecurs
 const createSampleDataFromPropertyAttributes = (
   property,
   stateless = false,
-  statelessHashKey = "") => {
+  exampleSuffix,
+  statelessHashKey = ""
+) => {
   let value;
   switch (property.type) {
     case "string":
@@ -145,10 +149,11 @@ const createSampleDataFromPropertyAttributes = (
       }
       const array = []
       for (let k = 0; k < DEFAULT_ARRAY_TYPE_TEST_DATA_LENGTH; k++) {
+        const suffix = exampleSuffix ? `_${k}` : ""
         if (property.items.type === "object") {
-          array.push(createSampleDataFromPropertyAttributes(property.items.properties, stateless, `${statelessHashKey}-${k}`) + `_${k}`)
+          array.push(createSampleDataFromPropertyAttributes(property.items.properties, stateless, `${statelessHashKey}-${k}`) + suffix)
         } else {
-          array.push(createSampleDataFromPropertyAttributes(property.items, stateless, `${statelessHashKey}-${k}`) + `_${k}`)
+          array.push(createSampleDataFromPropertyAttributes(property.items, stateless, `${statelessHashKey}-${k}`) + suffix)
         }
       }
       value = array

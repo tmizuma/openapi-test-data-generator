@@ -13,18 +13,19 @@ import {
  * @property {number} numberOfArrayTestData - the number of test data. default: 3
  * @property {Array<string>} ignoreList - The list of not output files
  * @property {string} extension - output file extension
+ * @property {boolean} exampleSuffix - wheater if need for exampleSuffix
  *
  * @param {*} args
  * @returns {Promise<ValidatedValues>} validated values
  */
-export const validate = async (args) => {
+export const validate = async(args) => {
   const inputPath = args.input;
-  const stateless = args.stateless === undefined ? true : args.stateless; // default: true
+  const stateless = args["stateless"] === undefined || args["stateless"] === "true" // default: true
   const outputPath =
     args.output.slice(-1) === "/" ? args.output.slice(0, -1) : args.output;
-  const numberOfArrayTestData = args["numberOfArrayData"]
-    ? args["numberOfArrayData"]
-    : DEFAULT_NUMBER_OF_ARRAY_DATA;
+  const numberOfArrayTestData = args["numberOfArrayData"] ?
+    args["numberOfArrayData"] :
+    DEFAULT_NUMBER_OF_ARRAY_DATA;
   if (
     numberOfArrayTestData < 1 ||
     numberOfArrayTestData > MAX_NUMBER_OF_ARRAY_DATA
@@ -33,11 +34,11 @@ export const validate = async (args) => {
       `Unexpected number of array test data! 0 < numberOfArrayTestData < ${MAX_NUMBER_OF_ARRAY_DATA}`
     );
   }
-  const ignoreList = args.ignore
-    ? args.ignore.replaceAll(" ", "").split(",")
-    : [];
+  const ignoreList = args.ignore ?
+    args.ignore.replaceAll(" ", "").split(",") : [];
 
   const extension = args["extension"] ? args["extension"] : ".ts";
+  const exampleSuffix = args["exampleSuffix"] === undefined || args["exampleSuffix"] === "true" // default: true
   if (extension !== ".js" && extension !== ".ts") {
     throw new Error("Unexpected extension!");
   }
@@ -50,7 +51,6 @@ export const validate = async (args) => {
     Logger.info(`${outputPath}: No such file or directory`);
     return null;
   }
-
   return {
     inputPath,
     outputPath,
@@ -58,5 +58,6 @@ export const validate = async (args) => {
     numberOfArrayTestData,
     ignoreList,
     extension,
+    exampleSuffix
   };
 };

@@ -230,3 +230,4 @@ components:
 | -ext, --extension \<output file extension\> | 出力拡張子 `.ts` \| `.js` | `.ts` | - |
 | -ignore, --ignore \<ignore schema list\> | 出力を無視したいスキーマリスト(カンマ区切り) `e.g) -ignore Employee,Profile` | - | - |
 | -s, --stateless \<true \| false\> | ステートレスなランダムデータを生成することができます。このオプションは、同じyaml定義が与えられたときに、同じサンプルデータを返すことを保証します。 | true | - |
+| -es, --example-suffix \<true \| false\> | yamlにexample属性が存在する場合、テストデータにsuffixを付与するかどうか | true | - |
