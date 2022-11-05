@@ -31,15 +31,9 @@ export const getRandomYmdhhmmssStateless = (fromYmd, key) => {
   const y = d1.getFullYear();
   const m = ("00" + (d1.getMonth() + 1)).slice(-2);
   const d = ("00" + d1.getDate()).slice(-2);
-  const hh = ("00" + createRandomNumberByMaxValueStateless(key, 0, 23)).slice(
-    -2
-  );
-  const mm = ("00" + createRandomNumberByMaxValueStateless(key, 0, 59)).slice(
-    -2
-  );
-  const ss = ("00" + createRandomNumberByMaxValueStateless(key, 0, 59)).slice(
-    -2
-  );
+  const hh = ("00" + createRandomNumberByMaxValueStateless(key, 0, 23)).slice(-2);
+  const mm = ("00" + createRandomNumberByMaxValueStateless(key, 0, 59)).slice(-2);
+  const ss = ("00" + createRandomNumberByMaxValueStateless(key, 0, 59)).slice(-2);
   return `${y}-${m}-${d} ${hh}:${mm}:${ss}`;
 };
 
@@ -147,7 +141,7 @@ export const createRandomNumberByMaxValueStateless = (
   for (let i = 0; i < hashedKey.length; i++) {
     seed = seed + hashedKey.charCodeAt(i);
   }
-  return createRandomByRangeAndSeed(seed, minValue, maxValue);
+  return createRandomByRangeAndSeed(seed, minimum, maximum);
 };
 
 export const createRandomBooleanStateless = (key) => {

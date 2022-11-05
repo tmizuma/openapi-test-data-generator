@@ -37,7 +37,15 @@ export const employee = {
 		"age": 40,
 		"birthdate": "2026-08-28",
 		"sex": "MALE",
-		"hobby": "watching movies_0"
+		"hobby": [
+			"watching movies_0",
+			"watching movies_1",
+			"watching movies_2"
+		]
+	},
+	"department": {
+		"id": 4,
+		"name": "Marketing"
 	}
 }
 // employee is the same as employee_0
@@ -51,7 +59,15 @@ const employee0 = {
 		"age": 40,
 		"birthdate": "2026-08-28",
 		"sex": "MALE",
-		"hobby": "watching movies_0"
+		"hobby": [
+			"watching movies_0",
+			"watching movies_1",
+			"watching movies_2"
+		]
+	},
+	"department": {
+		"id": 4,
+		"name": "Marketing"
 	}
 }
 const employee1 = {
@@ -64,7 +80,15 @@ const employee1 = {
 		"age": 40,
 		"birthdate": "2026-08-28",
 		"sex": "MALE",
-		"hobby": "watching movies_0"
+		"hobby": [
+			"watching movies_0",
+			"watching movies_1",
+			"watching movies_2"
+		]
+	},
+	"department": {
+		"id": 4,
+		"name": "Marketing"
 	}
 }
 const employee2 = {
@@ -77,7 +101,15 @@ const employee2 = {
 		"age": 40,
 		"birthdate": "2026-08-28",
 		"sex": "MALE",
-		"hobby": "watching movies_0"
+		"hobby": [
+			"watching movies_0",
+			"watching movies_1",
+			"watching movies_2"
+		]
+	},
+	"department": {
+		"id": 4,
+		"name": "Marketing"
 	}
 }
 
@@ -90,26 +122,42 @@ export const profile = {
 	"age": 46,
 	"birthdate": "2011-04-12",
 	"sex": "MALE",
-	"hobby": "watching movies_0"
+	"hobby": [
+		"watching movies_0",
+		"watching movies_1",
+		"watching movies_2"
+	]
 }
 // profile is the same as profile_0
 const profile0 = {
 	"age": 46,
 	"birthdate": "2011-04-12",
 	"sex": "MALE",
-	"hobby": "watching movies_0"
+	"hobby": [
+		"watching movies_0",
+		"watching movies_1",
+		"watching movies_2"
+	]
 }
 const profile1 = {
 	"age": 48,
 	"birthdate": "2017-12-22",
 	"sex": "FEMALE",
-	"hobby": "watching movies_1"
+	"hobby": [
+		"watching movies_0",
+		"watching movies_1",
+		"watching movies_2"
+	]
 }
 const profile2 = {
 	"age": 32,
 	"birthdate": "2024-04-09",
 	"sex": "ELSE",
-	"hobby": "watching movies_2"
+	"hobby": [
+		"watching movies_0",
+		"watching movies_1",
+		"watching movies_2"
+	]
 }
 
 export const profileList = [profile0,profile1,profile2]

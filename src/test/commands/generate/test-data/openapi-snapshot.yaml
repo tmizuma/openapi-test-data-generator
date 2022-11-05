@@ -27,7 +27,18 @@ components:
           type: string
           format: date-time
         profile:
-          $ref: "#/components/schemas/Profile"
+          $ref: '#/components/schemas/Profile'
+        department:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+              enum:
+                - Marketing
+                - Human Resouce
+                - Development
     Profile:
       title: Profile
       type: object
@@ -46,5 +57,7 @@ components:
             - FEMALE
             - ELSE
         hobby:
-          type: string
-          example: watching movies
+          type: array
+          items: 
+            type: string
+            example: watching movies

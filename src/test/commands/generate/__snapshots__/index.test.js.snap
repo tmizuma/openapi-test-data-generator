@@ -5,12 +5,20 @@ Map {
   "Employee" => [
     {
       "companyId": "999_0",
+      "department": {
+        "id": 4,
+        "name": "Marketing",
+      },
       "id": "9c0f76ea11",
       "name": "John Doe_0",
       "profile": {
         "age": 40,
         "birthdate": "2026-08-28",
-        "hobby": "watching movies_0",
+        "hobby": [
+          "watching movies_0",
+          "watching movies_1",
+          "watching movies_2",
+        ],
         "sex": "MALE",
       },
       "registdate": "2022-10-03 12:00:00",
@@ -18,12 +26,20 @@ Map {
     },
     {
       "companyId": "999_1",
+      "department": {
+        "id": 4,
+        "name": "Marketing",
+      },
       "id": "d1adcc3f59",
       "name": "John Doe_1",
       "profile": {
         "age": 40,
         "birthdate": "2026-08-28",
-        "hobby": "watching movies_0",
+        "hobby": [
+          "watching movies_0",
+          "watching movies_1",
+          "watching movies_2",
+        ],
         "sex": "MALE",
       },
       "registdate": "2029-09-07 08:08:08",
@@ -31,12 +47,20 @@ Map {
     },
     {
       "companyId": "999_2",
+      "department": {
+        "id": 4,
+        "name": "Marketing",
+      },
       "id": "a7e94f011e",
       "name": "John Doe_2",
       "profile": {
         "age": 40,
         "birthdate": "2026-08-28",
-        "hobby": "watching movies_0",
+        "hobby": [
+          "watching movies_0",
+          "watching movies_1",
+          "watching movies_2",
+        ],
         "sex": "MALE",
       },
       "registdate": "2011-11-22 11:59:59",
@@ -47,19 +71,31 @@ Map {
     {
       "age": 46,
       "birthdate": "2011-04-12",
-      "hobby": "watching movies_0",
+      "hobby": [
+        "watching movies_0",
+        "watching movies_1",
+        "watching movies_2",
+      ],
       "sex": "MALE",
     },
     {
       "age": 48,
       "birthdate": "2017-12-22",
-      "hobby": "watching movies_1",
+      "hobby": [
+        "watching movies_0",
+        "watching movies_1",
+        "watching movies_2",
+      ],
       "sex": "FEMALE",
     },
     {
       "age": 32,
       "birthdate": "2024-04-09",
-      "hobby": "watching movies_2",
+      "hobby": [
+        "watching movies_0",
+        "watching movies_1",
+        "watching movies_2",
+      ],
       "sex": "ELSE",
     },
   ],

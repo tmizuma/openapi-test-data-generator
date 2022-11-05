@@ -1,3 +1,4 @@
+import { DEFAULT_ARRAY_TYPE_TEST_DATA_LENGTH } from "../const/index.js";
 import {
   createRandomNumberByRange,
   createRandomNumberByMaxValueStateless,
@@ -20,9 +21,9 @@ import {
 export const createSampleDataJson = (schemas, name, options) => {
   const schema = schemas[name];
   const stateless = options.stateless;
-  const depthOfRecursion = options.depthOfRecursion
-    ? options.depthOfRecursion
-    : 0;
+  const depthOfRecursion = options.depthOfRecursion ?
+    options.depthOfRecursion :
+    0;
   const numberOfArray = options.n;
   const properties = schema.properties;
   const result = [];
@@ -38,92 +39,124 @@ export const createSampleDataJson = (schemas, name, options) => {
 
   for (let i = 0; i < numberOfArray; i++) {
     // create sample data for a specified number of pieces.
-    const element = {};
-    Object.keys(properties).forEach((key) => {
-      const property = properties[key];
-      let sampleData;
-
-      // enum type
-      if (property.enum && property.enum.length > 0) {
-        sampleData = `${property.enum[i % property.enum.length]}`;
-      }
-
-      // if exists example data
-      sampleData =
-        property.example && !(property.enum && property.enum.length > 0)
-          ? `${property.example}_${i}`
-          : sampleData;
-
-      // create sample data recursively if the property type is $ref.
-      if (property.$ref) {
-        sampleData = createSampleDataJson(
-          schemas,
-          property.$ref.replace("#/components/schemas/", ""),
-          { ...options, n: 1, depthOfRecursion: depthOfRecursion + 1 }
-        )[0];
-      }
-
-      // otherwise, create sample data from property attributes
-      if (sampleData === undefined) {
-        const statelessHashKey = `${name}-${key}-${depthOfRecursion}-${i}`;
-        sampleData = createSampleDataFromPropertyAttributes(
-          property,
-          stateless,
-          statelessHashKey
-        );
-      }
-      element[key] = sampleData;
-    });
-    result.push(element);
+    result.push(createSampleDataFromProperties(schemas, properties, name, depthOfRecursion, stateless, options, i));
   }
   return result;
 };
 
+const createSampleDataFromProperties = (schemas, properties, name, depthOfRecursion, stateless, options, i = 0) => {
+  const element = {};
+  Object.keys(properties).forEach((key) => {
+    const property = properties[key];
+    let sampleData;
+
+    // enum type
+    if (property.enum && property.enum.length > 0) {
+      sampleData = `${property.enum[i % property.enum.length]}`;
+    }
+
+    // if exists example data
+    sampleData =
+      property.example && !(property.enum && property.enum.length > 0) ?
+      `${property.example}_${i}` :
+      sampleData;
+
+    // create sample data recursively if the property type is $ref.
+    if (property.$ref) {
+      sampleData = createSampleDataJson(
+        schemas,
+        property.$ref.replace("#/components/schemas/", ""), {...options, n: 1, depthOfRecursion: depthOfRecursion + 1 }
+      )[0];
+    }
+
+    if (property.type === "object") {
+      sampleData = createSampleDataFromProperties(schemas, property.properties, name, depthOfRecursion, stateless, i)
+    }
+
+    // otherwise, create sample data from property attributes
+    if (sampleData === undefined) {
+      const statelessHashKey = `${name}-${key}-${depthOfRecursion}-${i}`;
+      sampleData = createSampleDataFromPropertyAttributes(
+        property,
+        stateless,
+        statelessHashKey
+      );
+    }
+    element[key] = sampleData;
+  });
+  return element
+}
+
 const createSampleDataFromPropertyAttributes = (
   property,
   stateless = false,
-  statelessHashKey = ""
-) => {
+  statelessHashKey = "") => {
   let value;
   switch (property.type) {
     case "string":
+      if (property.example) {
+        value = property.example
+        break;
+      }
+
       if (property.format === "date-time") {
         // create a random date-time data
-        value = stateless
-          ? getRandomYmdhhmmssStateless("2000/01/01", statelessHashKey)
-          : getRandomYmdhhmmss("2000/01/01");
+        value = stateless ?
+          getRandomYmdhhmmssStateless("2000/01/01", statelessHashKey) :
+          getRandomYmdhhmmss("2000/01/01");
       } else if (property.format === "date") {
         // create a random date data
-        value = stateless
-          ? getRandomYmdStateless("2000/01/01", statelessHashKey)
-          : getRandomYmd("2000/01/01");
+        value = stateless ?
+          getRandomYmdStateless("2000/01/01", statelessHashKey) :
+          getRandomYmd("2000/01/01");
       } else {
-        value = stateless
-          ? createRandomStringByMaxLengtheStateless(
-              statelessHashKey,
-              property.maxLength
-            )
-          : createRandomStringByRange(property.minLength, property.maxLength);
+        value = stateless ?
+          createRandomStringByMaxLengtheStateless(
+            statelessHashKey,
+            property.maxLength
+          ) :
+          createRandomStringByRange(property.minLength, property.maxLength);
       }
       break;
-    case "number" || "integer":
+    case "number":
       // create a random number
-      value = stateless
-        ? createRandomNumberByMaxValueStateless(
-            statelessHashKey,
-            property.minimum,
-            property.maximum
-          )
-        : createRandomNumberByRange(property.minimum, property.maximum);
+      value = stateless ?
+        createRandomNumberByMaxValueStateless(
+          statelessHashKey,
+          property.minimum,
+          property.maximum
+        ) :
+        createRandomNumberByRange(property.minimum, property.maximum);
+      break;
+    case "integer":
+      // create a random number
+      value = stateless ?
+        createRandomNumberByMaxValueStateless(
+          statelessHashKey,
+          property.minimum,
+          property.maximum
+        ) :
+        createRandomNumberByRange(property.minimum, property.maximum);
       break;
     case "array":
-      // create a empty array
-      value = [];
+      if (property.items === undefined) {
+        value = [];
+        break;
+      }
+      const array = []
+      for (let k = 0; k < DEFAULT_ARRAY_TYPE_TEST_DATA_LENGTH; k++) {
+        if (property.items.type === "object") {
+          array.push(createSampleDataFromPropertyAttributes(property.items.properties, stateless, `${statelessHashKey}-${k}`) + `_${k}`)
+        } else {
+          array.push(createSampleDataFromPropertyAttributes(property.items, stateless, `${statelessHashKey}-${k}`) + `_${k}`)
+        }
+      }
+      value = array
       break;
     case "boolean":
-      value = stateless
-        ? createRandomBooleanStateless(statelessHashKey)
-        : Math.random() > 1 / 2;
+      value = stateless ?
+        createRandomBooleanStateless(statelessHashKey) :
+        Math.random() > 1 / 2;
       break;
     default:
       // otherwise; {}
