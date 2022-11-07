@@ -81,7 +81,7 @@ export default class GenerateDataCommand {
     return resultArray;
   };
 
-  _createSampleDataFromProperties = (properties, name, options, i = 0) => {
+  _createSampleDataFromProperties = (properties, name, options, n = 0) => {
     const element = {};
     const stateless = options.stateless;
     Object.keys(properties).forEach((key) => {
@@ -90,11 +90,11 @@ export default class GenerateDataCommand {
 
       // enum type
       if (property.enum && property.enum.length > 0) {
-        sampleData = `${property.enum[i % property.enum.length]}`;
+        sampleData = `${property.enum[n % property.enum.length]}`;
       }
 
       // if exists example data
-      const suffix = options.exampleSuffix ? `_${i}` : '';
+      const suffix = options.exampleSuffix ? `_${n}` : '';
       sampleData =
         property.example && !(property.enum && property.enum.length > 0) ?
         `${property.example}${suffix}` :
@@ -112,14 +112,14 @@ export default class GenerateDataCommand {
           property.properties,
           name,
           options,
-          i
+          n
         );
       }
 
       // otherwise, create sample data from property attributes
       if (sampleData === undefined) {
-        const statelessHashKey = `${name}-${key}-${options.depthOfRecursion}-${i}`;
-        sampleData = this.createSampleDataFromPropertyAttributes(
+        const statelessHashKey = `${name}-${key}-${options.depthOfRecursion}-${n}`;
+        sampleData = this._createSampleDataFromPropertyAttributes(
           property,
           stateless,
           options.exampleSuffix,
@@ -131,7 +131,7 @@ export default class GenerateDataCommand {
     return element;
   };
 
-  createSampleDataFromPropertyAttributes = (
+  _createSampleDataFromPropertyAttributes = (
     property,
     stateless = false,
     exampleSuffix,
@@ -194,7 +194,7 @@ export default class GenerateDataCommand {
           const suffix = exampleSuffix ? `_${k}` : '';
           if (property.items.type === 'object') {
             array.push(
-              this.createSampleDataFromPropertyAttributes(
+              this._createSampleDataFromPropertyAttributes(
                 property.items.properties,
                 stateless,
                 `${statelessHashKey}-${k}`
@@ -202,7 +202,7 @@ export default class GenerateDataCommand {
             );
           } else {
             array.push(
-              this.createSampleDataFromPropertyAttributes(
+              this._createSampleDataFromPropertyAttributes(
                 property.items,
                 stateless,
                 `${statelessHashKey}-${k}`
