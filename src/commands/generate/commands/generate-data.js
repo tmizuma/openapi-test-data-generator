@@ -40,7 +40,7 @@ export default class GenerateDataCommand {
         n: context.numberOfArrayTestData,
         stateless: context.stateless,
         exampleSuffix: context.exampleSuffix,
-        depthOfRecursion: 0
+        depthOfSchemaRecursion: 0
       });
 
       schemaDataMap.set(targetSchema, data);
@@ -59,7 +59,11 @@ export default class GenerateDataCommand {
    * @param {*} options
    * @returns {Array<object>} sample data
    */
-  _generateDataFromTargetSchemaWithOptions = (targetSchemaName, options) => {
+  _generateDataFromTargetSchemaWithOptions = (
+    targetSchemaName,
+    options,
+    depthOfSchemaRecursion = 0
+  ) => {
     const schema = this._schemas[targetSchemaName];
     const numberOfData = options.n;
     const schemaProperties = schema.properties;
@@ -67,10 +71,11 @@ export default class GenerateDataCommand {
 
     if (schema.$ref) {
       const schemaName = schema.$ref.replace('#/components/schemas/', '');
-      return this._generateDataFromTargetSchemaWithOptions(schemaName, {
-        ...options,
-        depthOfRecursion: options.depthOfRecursion + 1
-      });
+      return this._generateDataFromTargetSchemaWithOptions(
+        schemaName,
+        options,
+        depthOfSchemaRecursion + 1
+      );
     }
 
     for (let i = 0; i < numberOfData; i++) {
@@ -80,14 +85,21 @@ export default class GenerateDataCommand {
           schemaProperties,
           targetSchemaName,
           options,
-          i
+          i,
+          depthOfSchemaRecursion
         )
       );
     }
     return resultArray;
   };
 
-  _createDataFromProperties = (properties, name, options, n = 0) => {
+  _createDataFromProperties = (
+    properties,
+    name,
+    options,
+    n = 0,
+    depthOfSchemaRecursion
+  ) => {
     const element = {};
     const stateless = options.stateless;
     Object.keys(properties).forEach((key) => {
@@ -109,7 +121,8 @@ export default class GenerateDataCommand {
       // create sample data recursively if the property type is $ref.
       if (property.$ref) {
         sampleData = this._generateDataFromTargetSchemaWithOptions(
-          property.$ref.replace('#/components/schemas/', ''), {...options, n: 1, depthOfRecursion: options.depthOfRecursion + 1 }
+          property.$ref.replace('#/components/schemas/', ''), {...options, n: 1 },
+          depthOfSchemaRecursion
         )[0];
       }
 
@@ -118,13 +131,14 @@ export default class GenerateDataCommand {
           property.properties,
           name,
           options,
-          n
+          n,
+          depthOfSchemaRecursion
         );
       }
 
       // otherwise, create sample data from property attributes
       if (sampleData === undefined) {
-        const statelessHashKey = `${name}-${key}-${options.depthOfRecursion}-${n}`;
+        const statelessHashKey = `${name}-${key}-${depthOfSchemaRecursion}-${n}`;
         sampleData = this._createSampleDataFromPropertyAttributes(
           property,
           stateless,
@@ -231,7 +245,7 @@ export default class GenerateDataCommand {
     return value;
   };
 
-  _getNextDepthOfRecursion = (depth) => {
+  _getNextdepthOfSchemaRecursion = (depth) => {
     if (!depth) {
       return 1;
     }
