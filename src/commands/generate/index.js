@@ -17,5 +17,7 @@ export const generate = async(args) => {
     new GenerateDataCommand(),
     new OutputCommand()
   );
-  return await generator.exec();
+  await generator.exec();
+
+  return generator.getGeneratedDataObject();
 };
