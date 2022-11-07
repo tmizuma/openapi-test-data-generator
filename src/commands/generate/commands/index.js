@@ -20,12 +20,12 @@ export default class Generator {
   async read() {
     await this._readCommand.exec();
     const parsedObject = this._readCommand.getParsedObject();
-    const schemas = this._readCommand.getSchemas();
-    return { parsedObject, schemas };
+    const _schemaNameList = this._readCommand.getSchemaNameList();
+    return { parsedObject, _schemaNameList };
   }
 
   async generate(input) {
-    this._generateCommand.exec(input.schemas, input.parsedObject);
+    this._generateCommand.exec(input._schemaNameList, input.parsedObject);
     return this._generateCommand.getSchemaDataMap();
   }
 

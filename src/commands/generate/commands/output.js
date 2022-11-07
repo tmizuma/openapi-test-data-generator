@@ -1,4 +1,4 @@
-import { exportFileBySampleData } from '../output.js';
+import { exportFileBySampleData } from '../utils/index.js';
 
 export default class OutputCommand {
   _context;
