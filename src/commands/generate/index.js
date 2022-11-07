@@ -9,16 +9,16 @@ import Generator from './commands/index.js';
  * @param {*} args
  * @returns {Map}
  */
-export const generate = async(args) => {
-  const context = await validate(args);
+export const generate = async (args) => {
+	const context = await validate(args);
 
-  const generator = new Generator(
-    context,
-    new ReadYamlCommand(),
-    new GenerateDataCommand(),
-    new OutputCommand()
-  );
-  await generator.exec();
+	const generator = new Generator(
+		context,
+		new ReadYamlCommand(),
+		new GenerateDataCommand(),
+		new OutputCommand()
+	);
+	await generator.exec();
 
-  return generator.getGeneratedDataObject();
+	return generator.getGeneratedDataObject();
 };
