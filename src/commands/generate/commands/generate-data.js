@@ -24,26 +24,27 @@ export default class GenerateDataCommand {
 
   exec(schemaNameList, parsedObject) {
     const context = this._context;
-    this._schemas = parsedObject.components.schemas;
+    this._schemas = parsedObject.components.schemas; // all schemas
     const schemaDataMap = new Map();
-    schemaNameList.forEach((s) => {
-      const schemaName = s.replaceAll('.yaml', '');
-      if (context.ignoreList.indexOf(schemaName) === -1) {
-        schemaDataMap.set(
-          schemaName,
-          this._generateTestDataFromSchema(schemaName, {
-            n: context.numberOfArrayTestData,
-            stateless: context.stateless,
-            exampleSuffix: context.exampleSuffix,
-            depthOfRecursion: 0
-          })
-        );
-      } else {
+
+    for (let i = 0; i < schemaNameList.length; i++) {
+      const targetSchema = schemaNameList[i].replaceAll('.yaml', '');
+      if (context.ignoreList.indexOf(targetSchema) !== -1) {
         Logger.warn(
-          `[ignore] output: ==> ${context.outputPath}/${schemaName}${context.extension}`
+          `[ignore] output: ==> ${context.outputPath}/${targetSchema}${context.extension}`
         );
+        continue;
       }
-    });
+
+      const data = this._generateDataFromTargetSchemaWithOptions(targetSchema, {
+        n: context.numberOfArrayTestData,
+        stateless: context.stateless,
+        exampleSuffix: context.exampleSuffix,
+        depthOfRecursion: 0
+      });
+
+      schemaDataMap.set(targetSchema, data);
+    }
     this._schemaDataMap = schemaDataMap;
   }
 
@@ -54,34 +55,39 @@ export default class GenerateDataCommand {
   /**
    * Create schema sample data
    * @param {*} schemas
-   * @param {*} name
+   * @param {*} targetSchemaName
    * @param {*} options
    * @returns {Array<object>} sample data
    */
-  _generateTestDataFromSchema = (name, options) => {
-    const schema = this._schemas[name];
-    const numberOfArray = options.n;
+  _generateDataFromTargetSchemaWithOptions = (targetSchemaName, options) => {
+    const schema = this._schemas[targetSchemaName];
+    const numberOfData = options.n;
     const schemaProperties = schema.properties;
     const resultArray = [];
 
     if (schema.$ref) {
       const schemaName = schema.$ref.replace('#/components/schemas/', '');
-      return this._generateTestDataFromSchema(schemaName, {
+      return this._generateDataFromTargetSchemaWithOptions(schemaName, {
         ...options,
         depthOfRecursion: options.depthOfRecursion + 1
       });
     }
 
-    for (let i = 0; i < numberOfArray; i++) {
+    for (let i = 0; i < numberOfData; i++) {
       // create sample data for a specified number of pieces.
       resultArray.push(
-        this._createSampleDataFromProperties(schemaProperties, name, options, i)
+        this._createDataFromProperties(
+          schemaProperties,
+          targetSchemaName,
+          options,
+          i
+        )
       );
     }
     return resultArray;
   };
 
-  _createSampleDataFromProperties = (properties, name, options, n = 0) => {
+  _createDataFromProperties = (properties, name, options, n = 0) => {
     const element = {};
     const stateless = options.stateless;
     Object.keys(properties).forEach((key) => {
@@ -102,13 +108,13 @@ export default class GenerateDataCommand {
 
       // create sample data recursively if the property type is $ref.
       if (property.$ref) {
-        sampleData = this._generateTestDataFromSchema(
+        sampleData = this._generateDataFromTargetSchemaWithOptions(
           property.$ref.replace('#/components/schemas/', ''), {...options, n: 1, depthOfRecursion: options.depthOfRecursion + 1 }
         )[0];
       }
 
       if (property.type === 'object') {
-        sampleData = this._createSampleDataFromProperties(
+        sampleData = this._createDataFromProperties(
           property.properties,
           name,
           options,
