@@ -58,6 +58,6 @@ components:
             - ELSE
         hobby:
           type: array
-          items: 
+          items:
             type: string
             example: watching movies

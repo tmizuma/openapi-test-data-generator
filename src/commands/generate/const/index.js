@@ -4,4 +4,4 @@ export const SALT = MAX_INTEGER; // to create stateless random value
 export const MAX_DAY_DIFF = 30 * 365; // 30 years
 export const DEFAULT_NUMBER_OF_ARRAY_DATA = 3;
 export const MAX_NUMBER_OF_ARRAY_DATA = 99999;
-export const DEFAULT_ARRAY_TYPE_TEST_DATA_LENGTH = 3
+export const DEFAULT_ARRAY_TYPE_TEST_DATA_LENGTH = 3;
