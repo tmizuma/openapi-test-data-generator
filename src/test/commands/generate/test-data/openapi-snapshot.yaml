@@ -32,13 +32,17 @@ components:
           type: object
           properties:
             id:
-              type: integer
-            name:
+              type: string
+            employee:
               type: string
               enum:
                 - Marketing
                 - Human Resouce
                 - Development
+        submemners:
+          type: array
+          items:
+            $ref: '#/components/schemas/Member'
     Profile:
       title: Profile
       type: object
@@ -61,3 +65,15 @@ components:
           items:
             type: string
             example: watching movies
+    Member:
+      title: Member
+      type: object
+      description: Member Info
+      properties:
+        id:
+          type: string
+          minLength: 5
+          maxLength: 10
+        name:
+          type: string
+          example: John Doe

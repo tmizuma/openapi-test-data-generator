@@ -6,8 +6,8 @@ Map {
     {
       "companyId": "999_0",
       "department": {
-        "id": 4,
-        "name": "Marketing",
+        "employee": "Marketing",
+        "id": "9c0f76ea11",
       },
       "id": "9c0f76ea11",
       "name": "John Doe_0",
@@ -23,12 +23,26 @@ Map {
       },
       "registdate": "2022-10-03 12:00:00",
       "role": "MANAGER",
+      "submemners": [
+        {
+          "id": "9872cbfc5e",
+          "name": "John Doe_0",
+        },
+        {
+          "id": "bbb6b9974e",
+          "name": "John Doe_1",
+        },
+        {
+          "id": "6b97c30085",
+          "name": "John Doe_2",
+        },
+      ],
     },
     {
       "companyId": "999_1",
       "department": {
-        "id": 0,
-        "name": "Human Resouce",
+        "employee": "Human Resouce",
+        "id": "d1adcc3f59",
       },
       "id": "d1adcc3f59",
       "name": "John Doe_1",
@@ -44,12 +58,26 @@ Map {
       },
       "registdate": "2029-09-07 08:08:08",
       "role": "ENGINEER",
+      "submemners": [
+        {
+          "id": "9872cbfc5e",
+          "name": "John Doe_0",
+        },
+        {
+          "id": "bbb6b9974e",
+          "name": "John Doe_1",
+        },
+        {
+          "id": "6b97c30085",
+          "name": "John Doe_2",
+        },
+      ],
     },
     {
       "companyId": "999_2",
       "department": {
-        "id": 4,
-        "name": "Development",
+        "employee": "Development",
+        "id": "a7e94f011e",
       },
       "id": "a7e94f011e",
       "name": "John Doe_2",
@@ -65,6 +93,20 @@ Map {
       },
       "registdate": "2011-11-22 11:59:59",
       "role": "ASSISTANT",
+      "submemners": [
+        {
+          "id": "9872cbfc5e",
+          "name": "John Doe_0",
+        },
+        {
+          "id": "bbb6b9974e",
+          "name": "John Doe_1",
+        },
+        {
+          "id": "6b97c30085",
+          "name": "John Doe_2",
+        },
+      ],
     },
   ],
   "Profile" => [
@@ -97,6 +139,20 @@ Map {
         "watching movies_2",
       ],
       "sex": "ELSE",
+    },
+  ],
+  "Member" => [
+    {
+      "id": "9872cbfc5e",
+      "name": "John Doe_0",
+    },
+    {
+      "id": "bbb6b9974e",
+      "name": "John Doe_1",
+    },
+    {
+      "id": "6b97c30085",
+      "name": "John Doe_2",
     },
   ],
 }

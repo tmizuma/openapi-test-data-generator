@@ -23,13 +23,15 @@ describe('generate-command', () => {
 			numberOfArrayData: 3,
 			extension: '.ts'
 		});
-		expect(result.size).toBe(2);
+		expect(result.size).toBe(3);
 		expect(result.has('Employee')).toBe(true);
 		expect(result.has('Profile')).toBe(true);
 		const employee = result.get('Employee');
 		const profile = result.get('Profile');
+		const member = result.get('Member');
 		expect(employee.length).toBe(3);
 		expect(profile.length).toBe(3);
+		expect(member.length).toBe(3);
 	});
 
 	test('Check if there are correct extension(.ts) files', async () => {
@@ -43,6 +45,8 @@ describe('generate-command', () => {
 		expect(fs.existsSync(`${outputFilesPath}/Profile.ts`)).toBe(true);
 		expect(fs.existsSync(`${outputFilesPath}/Employee.js`)).toBe(false);
 		expect(fs.existsSync(`${outputFilesPath}/Profile.js`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Member.js`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Member.js`)).toBe(false);
 	});
 	test('Check if there are correct extension(.js) files', async () => {
 		await generate({
@@ -55,6 +59,7 @@ describe('generate-command', () => {
 		expect(fs.existsSync(`${outputFilesPath}/Profile.ts`)).toBe(false);
 		expect(fs.existsSync(`${outputFilesPath}/Employee.js`)).toBe(true);
 		expect(fs.existsSync(`${outputFilesPath}/Profile.js`)).toBe(true);
+		expect(fs.existsSync(`${outputFilesPath}/Member.js`)).toBe(true);
 	});
 
 	test('-ignore option', async () => {
@@ -66,6 +71,7 @@ describe('generate-command', () => {
 		});
 		expect(fs.existsSync(`${outputFilesPath}/Employee.ts`)).toBe(false);
 		expect(fs.existsSync(`${outputFilesPath}/Profile.ts`)).toBe(true);
+		expect(fs.existsSync(`${outputFilesPath}/Member.ts`)).toBe(true);
 	});
 
 	test('-ignore: multiple ignore', async () => {
@@ -77,6 +83,7 @@ describe('generate-command', () => {
 		});
 		expect(fs.existsSync(`${outputFilesPath}/Employee.ts`)).toBe(false);
 		expect(fs.existsSync(`${outputFilesPath}/Profile.ts`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Member.ts`)).toBe(true);
 	});
 
 	test('stateless snapshot test', async () => {

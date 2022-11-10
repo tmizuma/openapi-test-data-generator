@@ -144,6 +144,8 @@ export default class GenerateDataCommand {
 					property,
 					stateless,
 					options.exampleSuffix,
+					options,
+					depthOfSchemaRefRecursion,
 					statelessHashKey
 				);
 			}
@@ -156,6 +158,8 @@ export default class GenerateDataCommand {
 		property,
 		stateless = false,
 		exampleSuffix,
+		options,
+		depthOfSchemaRefRecursion,
 		statelessHashKey = ''
 	) => {
 		let value;
@@ -213,11 +217,30 @@ export default class GenerateDataCommand {
 				const array = [];
 				for (let k = 0; k < DEFAULT_ARRAY_TYPE_TEST_DATA_LENGTH; k++) {
 					const suffix = exampleSuffix ? `_${k}` : '';
+					if (property.items.$ref) {
+						const targetSchemaName = property.items.$ref.replace(
+							'#/components/schemas/',
+							''
+						);
+						const schema = this._schemas[targetSchemaName];
+						const schemaProperties = schema.properties;
+						const data = this._generateDataFromTargetSchemaProperties(
+							schemaProperties,
+							targetSchemaName,
+							options,
+							k,
+							depthOfSchemaRefRecursion
+						);
+						array.push(data);
+						continue;
+					}
 					if (property.items.type === 'object') {
 						array.push(
 							this._generateDataFromPropertyType(
 								property.items.properties,
 								stateless,
+								options,
+								depthOfSchemaRefRecursion,
 								`${statelessHashKey}-${k}`
 							) + suffix
 						);
@@ -226,6 +249,8 @@ export default class GenerateDataCommand {
 							this._generateDataFromPropertyType(
 								property.items,
 								stateless,
+								options,
+								depthOfSchemaRefRecursion,
 								`${statelessHashKey}-${k}`
 							) + suffix
 						);
