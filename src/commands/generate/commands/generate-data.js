@@ -1,5 +1,8 @@
 import { Logger } from '../logger/index.js';
-import { DEFAULT_ARRAY_TYPE_TEST_DATA_LENGTH } from '../const/index.js';
+import {
+	DEFAULT_ARRAY_TYPE_TEST_DATA_LENGTH,
+	MAX_RECURSION
+} from '../const/index.js';
 import {
 	createRandomNumberByRange,
 	createRandomNumberByMaxValueStateless,
@@ -75,7 +78,9 @@ export default class GenerateDataCommand {
 		const numberOfData = options.n;
 		const schemaProperties = schema.properties;
 		const resultArray = [];
-
+		if (depthOfSchemaRefRecursion >= MAX_RECURSION) {
+			return [];
+		}
 		// create sample data for a specified number of pieces.
 		for (let i = 0; i < numberOfData; i++) {
 			resultArray.push(
@@ -101,6 +106,8 @@ export default class GenerateDataCommand {
 		const element = {};
 		const stateless = options.stateless;
 
+		if (depthOfSchemaRefRecursion >= MAX_RECURSION) return;
+
 		// Generating data from properties
 		Object.keys(properties).forEach((key) => {
 			const property = properties[key];
@@ -123,7 +130,7 @@ export default class GenerateDataCommand {
 				data = this._generateNumberOfTargetSchemaDataSpecifiedByOption(
 					property.$ref.replace('#/components/schemas/', ''),
 					{ ...options, n: 1 },
-					depthOfSchemaRefRecursion
+					depthOfSchemaRefRecursion + 1
 				)[0];
 			}
 
@@ -133,7 +140,7 @@ export default class GenerateDataCommand {
 					name,
 					options,
 					indexOfMultiData,
-					depthOfSchemaRefRecursion
+					depthOfSchemaRefRecursion + 1
 				);
 			}
 
@@ -229,9 +236,11 @@ export default class GenerateDataCommand {
 							targetSchemaName,
 							options,
 							k,
-							depthOfSchemaRefRecursion
+							depthOfSchemaRefRecursion + 1
 						);
-						array.push(data);
+						if (data) {
+							array.push(data);
+						}
 						continue;
 					}
 					if (property.items.type === 'object') {
