@@ -1,6 +1,6 @@
 import { validate } from './validator/index.js';
 import ReadYamlCommand from './commands/readyaml.js';
-import GenerateDataCommand from './commands/generate-data.js';
+import GenerateDataCommand from './commands/generate-data/index.js';
 import OutputCommand from './commands/output.js';
 import Generator from './commands/index.js';
 

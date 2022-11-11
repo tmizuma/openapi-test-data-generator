@@ -1,19 +1,10 @@
-import { Logger } from '../logger/index.js';
-import {
-	DEFAULT_ARRAY_TYPE_TEST_DATA_LENGTH,
-	MAX_RECURSION
-} from '../const/index.js';
-import {
-	createRandomNumberByRange,
-	createRandomNumberByMaxValueStateless,
-	createRandomStringByRange,
-	getRandomYmd,
-	getRandomYmdhhmmss,
-	createRandomStringByMaxLengtheStateless,
-	createRandomBooleanStateless,
-	getRandomYmdStateless,
-	getRandomYmdhhmmssStateless
-} from '../utils/index.js';
+import { Logger } from '../../logger/index.js';
+import { MAX_RECURSION } from '../../const/index.js';
+import { generateNumberTypeData } from './property-type/number.js';
+import { generateStringTypeData } from './property-type/string.js';
+import { generateBooleanTypeData } from './property-type/boolean.js';
+import { generateArrayTypeData } from './property-type/array.js';
+import { Type } from '../../../enum/type.js';
 
 export default class GenerateDataCommand {
 	_context;
@@ -134,7 +125,7 @@ export default class GenerateDataCommand {
 				)[0];
 			}
 
-			if (property.type === 'object') {
+			if (property.type === Type.OBJECT) {
 				data = this._generateDataFromTargetSchemaProperties(
 					property.properties,
 					name,
@@ -171,106 +162,32 @@ export default class GenerateDataCommand {
 	) => {
 		let value;
 		switch (property.type) {
-			case 'string':
-				if (property.example) {
-					value = property.example;
-					break;
-				}
-
-				if (property.format === 'date-time') {
-					// create a random date-time data
-					value = stateless
-						? getRandomYmdhhmmssStateless('2000/01/01', statelessHashKey)
-						: getRandomYmdhhmmss('2000/01/01');
-				} else if (property.format === 'date') {
-					// create a random date data
-					value = stateless
-						? getRandomYmdStateless('2000/01/01', statelessHashKey)
-						: getRandomYmd('2000/01/01');
-				} else {
-					value = stateless
-						? createRandomStringByMaxLengtheStateless(
-								statelessHashKey,
-								property.maxLength
-						  )
-						: createRandomStringByRange(property.minLength, property.maxLength);
-				}
+			case Type.STRING:
+				value = generateStringTypeData(property, statelessHashKey, stateless);
 				break;
-			case 'number':
+			case Type.NUMBER:
 				// create a random number
-				value = stateless
-					? createRandomNumberByMaxValueStateless(
-							statelessHashKey,
-							property.minimum,
-							property.maximum
-					  )
-					: createRandomNumberByRange(property.minimum, property.maximum);
+				value = generateNumberTypeData(property, statelessHashKey, stateless);
 				break;
-			case 'integer':
+			case Type.INTEGER:
 				// create a random number
-				value = stateless
-					? createRandomNumberByMaxValueStateless(
-							statelessHashKey,
-							property.minimum,
-							property.maximum
-					  )
-					: createRandomNumberByRange(property.minimum, property.maximum);
+				value = generateNumberTypeData(property, statelessHashKey, stateless);
 				break;
-			case 'array':
-				if (property.items === undefined) {
-					value = [];
-					break;
-				}
-				const array = [];
-				for (let k = 0; k < DEFAULT_ARRAY_TYPE_TEST_DATA_LENGTH; k++) {
-					const suffix = exampleSuffix ? `_${k}` : '';
-					if (property.items.$ref) {
-						const targetSchemaName = property.items.$ref.replace(
-							'#/components/schemas/',
-							''
-						);
-						const schema = this._schemas[targetSchemaName];
-						const schemaProperties = schema.properties;
-						const data = this._generateDataFromTargetSchemaProperties(
-							schemaProperties,
-							targetSchemaName,
-							options,
-							k,
-							depthOfSchemaRefRecursion + 1
-						);
-						if (data) {
-							array.push(data);
-						}
-						continue;
-					}
-					if (property.items.type === 'object') {
-						array.push(
-							this._generateDataFromPropertyType(
-								property.items.properties,
-								stateless,
-								options,
-								depthOfSchemaRefRecursion,
-								`${statelessHashKey}-${k}`
-							) + suffix
-						);
-					} else {
-						array.push(
-							this._generateDataFromPropertyType(
-								property.items,
-								stateless,
-								options,
-								depthOfSchemaRefRecursion,
-								`${statelessHashKey}-${k}`
-							) + suffix
-						);
-					}
-				}
-				value = array;
+			case Type.BOOLEAN:
+				value = generateBooleanTypeData(statelessHashKey, stateless);
 				break;
-			case 'boolean':
-				value = stateless
-					? createRandomBooleanStateless(statelessHashKey)
-					: Math.random() > 1 / 2;
+			case Type.ARRAY:
+				value = generateArrayTypeData(
+					this._schemas,
+					property,
+					stateless,
+					exampleSuffix,
+					options,
+					depthOfSchemaRefRecursion,
+					statelessHashKey,
+					this._generateDataFromTargetSchemaProperties,
+					this._generateDataFromPropertyType
+				);
 				break;
 			default:
 				// otherwise; {}
