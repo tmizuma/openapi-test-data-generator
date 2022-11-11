@@ -1,5 +1,5 @@
-import { Type } from '../../../../enum';
-import { DEFAULT_ARRAY_TYPE_TEST_DATA_LENGTH } from '../../../const';
+import { Type } from '../../../../enum/index.js';
+import { DEFAULT_ARRAY_TYPE_TEST_DATA_LENGTH } from '../../../const/index.js';
 
 export const generateArrayTypeData = (
 	schemas,

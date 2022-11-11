@@ -1,7 +1,7 @@
 import {
 	createRandomNumberByMaxValueStateless,
 	createRandomNumberByRange
-} from '../../../utils';
+} from '../../../utils/index.js';
 
 export const generateNumberTypeData = (
 	property,

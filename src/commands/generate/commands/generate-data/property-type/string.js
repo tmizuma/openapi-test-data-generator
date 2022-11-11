@@ -5,7 +5,7 @@ import {
 	getRandomYmdhhmmss,
 	getRandomYmdhhmmssStateless,
 	getRandomYmdStateless
-} from '../../../utils';
+} from '../../../utils/index.js';
 
 export const generateStringTypeData = (
 	property,

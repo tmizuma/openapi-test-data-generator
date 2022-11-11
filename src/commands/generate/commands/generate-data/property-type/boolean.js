@@ -1,4 +1,4 @@
-import { createRandomBooleanStateless } from '../../../utils';
+import { createRandomBooleanStateless } from '../../../utils/index.js';
 
 export const generateBooleanTypeData = (statelessHashKey, stateless) => {
 	return stateless
