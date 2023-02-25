@@ -10,12 +10,16 @@ program
   )
   .requiredOption('-i, --input <path>')
   .requiredOption('-o, --output <path>')
-  .option('-ai, --ai-mode <true | false>')
   .option('-n, --number-of-array-data <number>')
   .option('-ext, --extension <output file extension>')
-  .option('-ignore, --ignore <ignore schema list separated by commas>')
+  .option('-ignore, --ignore <list of schemas that do not create data>')
   .option('-s, --stateless <true | false>')
   .option('-es, --example-suffix <true | false>')
-  .action(generate);
+  .option('-ai, --ai <true | false>')
+  .option(
+    '-avoid-ai, --avoid-ai <schema list that does not allow AI to automatically generate data>'
+  )
+
+.action(generate);
 
 program.parse(process.argv);

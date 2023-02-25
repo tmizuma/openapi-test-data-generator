@@ -15,7 +15,11 @@ export const generateStringTypeData = (
   options
 ) => {
   // if format type exists, ai mode will be ignored
-  if (options.ai && !property.format) {
+  if (
+    options.ai &&
+    !property.format &&
+    !_isAvoidAIGenerate(options.avoidAIGenerateList, property.key)
+  ) {
     // NEED_TO_BE_REPLACE_BY_OPENAI_RESPONSE will be replaced by open ai
     return NEED_TO_BE_REPLACE_BY_OPENAI_RESPONSE;
   }
@@ -41,4 +45,8 @@ export const generateStringTypeData = (
       property.maxLength
     ) :
     createRandomStringByRange(property.minLength, property.maxLength);
+};
+
+const _isAvoidAIGenerate = (avoidAIGenerateList, property) => {
+  return avoidAIGenerateList.filter((v) => v === property).length !== 0;
 };

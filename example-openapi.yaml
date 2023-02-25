@@ -51,6 +51,8 @@ components:
           type: number
           minimum: 18
           maximum: 50
+        address:
+          type: string
         birthdate:
           type: string
           format: date

@@ -45,6 +45,7 @@ export default class GenerateDataCommand {
           ai: context.ai,
           exampleSuffix: context.exampleSuffix,
           depthOfSchemaRefRecursion: 0,
+          avoidAIGenerateList: context.avoidAIGenerateList,
           openApiKey
         }
       );
@@ -68,18 +69,19 @@ export default class GenerateDataCommand {
       );
     }
     const propertyMap = new Map();
-    // for (let propertyName of propertySet) {
-    //   propertyMap.set(
-    //     propertyName,
-    //     await fetch(apiKey, propertyName, numberOfData)
-    //   );
-    // }
-    // console.log(propertyMap);
+    for (let propertyName of propertySet) {
+      propertyMap.set(
+        propertyName,
+        await fetch(apiKey, propertyName, numberOfData)
+      );
+    }
+    console.log(propertyMap);
     if (propertyMap.size === 0) return;
-
     const replacedSchemaDataMap = this._replaceByOpenaiData(
+      undefined,
       this._schemaDataMap,
-      propertyMap
+      propertyMap,
+      0
     );
 
     this._schemaDataMap = replacedSchemaDataMap;
@@ -89,7 +91,33 @@ export default class GenerateDataCommand {
     return this._schemaDataMap;
   }
 
-  _replaceByOpenaiData = (schema, propertyMap) => {};
+  _replaceByOpenaiData = (key, target, propertyMap, index = 0) => {
+    if (Array.isArray(target)) {
+      const newArray = [];
+      for (let i = 0; i < target.length; i++) {
+        newArray.push(
+          this._replaceByOpenaiData(key, target[i], propertyMap, i)
+        );
+      }
+      return newArray;
+    }
+
+    if (typeof target === 'object') {
+      const newObject = {};
+      const keys = Object.keys(target);
+      for (let i = 0; i < keys.length; i++) {
+        const k = keys[i];
+        const v = target[k];
+        newObject[k] = this._replaceByOpenaiData(k, v, propertyMap, index);
+      }
+      return newObject;
+    }
+
+    if (target === NEED_TO_BE_REPLACE_BY_OPENAI_RESPONSE && key !== undefined) {
+      return propertyMap.get(key)[index];
+    }
+    return target;
+  };
 
   _findPropertyNamesNeedToBeReplaceByOpenAIResponse = (obj, propertySet) => {
     const keys = Object.keys(obj);
@@ -168,9 +196,8 @@ export default class GenerateDataCommand {
 
     // Generating data from properties
     Object.keys(properties).forEach((key) => {
-      const property = properties[key];
+      const property = {...properties[key], key };
       let data;
-
       // enum type
       if (property.enum && property.enum.length > 0) {
         data = `${property.enum[indexOfMultiData % property.enum.length]}`;

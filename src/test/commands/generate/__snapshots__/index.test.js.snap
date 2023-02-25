@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`generate-command stateless snapshot test 1`] = `
-Map {
-  "Employee" => [
+{
+  "Employee": [
     {
       "companyId": "999_0",
       "department": {
@@ -109,7 +109,21 @@ Map {
       ],
     },
   ],
-  "Profile" => [
+  "Member": [
+    {
+      "id": "9872cbfc5e",
+      "name": "John Doe_0",
+    },
+    {
+      "id": "bbb6b9974e",
+      "name": "John Doe_1",
+    },
+    {
+      "id": "6b97c30085",
+      "name": "John Doe_2",
+    },
+  ],
+  "Profile": [
     {
       "age": 46,
       "birthdate": "2011-04-12",
@@ -139,20 +153,6 @@ Map {
         "watching movies_2",
       ],
       "sex": "ELSE",
-    },
-  ],
-  "Member" => [
-    {
-      "id": "9872cbfc5e",
-      "name": "John Doe_0",
-    },
-    {
-      "id": "bbb6b9974e",
-      "name": "John Doe_1",
-    },
-    {
-      "id": "6b97c30085",
-      "name": "John Doe_2",
     },
   ],
 }

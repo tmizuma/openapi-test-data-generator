@@ -54,8 +54,7 @@ export const generateArrayTypeData = (
       continue;
     }
     // otherwise
-    let value = cbGenerateDataFromPropertyType(
-      property.items,
+    let value = cbGenerateDataFromPropertyType({...property.items, key: property.key },
       stateless,
       options,
       depthOfSchemaRefRecursion,

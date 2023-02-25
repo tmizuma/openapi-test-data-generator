@@ -10,7 +10,6 @@ export default class OutputCommand {
 
   async exec(schemaDataMap) {
     const context = this._context;
-    console.log(schemaDataMap);
     for (let key of Object.keys(schemaDataMap)) {
       await exportFileBySampleData(
         key,

@@ -4,6 +4,7 @@ import {
   DEFAULT_NUMBER_OF_ARRAY_DATA,
   MAX_NUMBER_OF_ARRAY_DATA
 } from '../const/index.js';
+import { Logger } from '../logger/index.js';
 
 /**
  * @typedef {Object} ValidatedValues
@@ -20,16 +21,14 @@ import {
  */
 export const validate = async(args) => {
   const inputPath = args.input;
-  const stateless = args['stateless'] === undefined ? false : args['stateless']; // default: false
-  const ai = args['ai'] === undefined || args['ai'] == 'true'; // default: true
-  if (ai == 'true' && stateless == 'true') {
-    throw new Error(`Either ai mode or stateless mode can be specified.`);
-  }
+  const ai = args['ai'] == 'true' ? true : false; // default: false
+  let stateless = args['stateless'] == 'false' || ai ? false : true; // default: true. if ai mode is true then stateless mode is false
   const outputPath =
     args.output.slice(-1) === '/' ? args.output.slice(0, -1) : args.output;
   const numberOfData = args['numberOfArrayData'] ?
     args['numberOfArrayData'] :
     DEFAULT_NUMBER_OF_ARRAY_DATA;
+
   if (numberOfData < 1 || numberOfData > MAX_NUMBER_OF_ARRAY_DATA) {
     throw new Error(
       `Unexpected number of array test data! 0 < numberOfData < ${MAX_NUMBER_OF_ARRAY_DATA}`
@@ -43,7 +42,9 @@ export const validate = async(args) => {
   const ignoreList = args.ignore ?
     args.ignore.replaceAll(' ', '').split(',') :
     [];
-
+  const avoidAIGenerateList = args.avoidAi ?
+    args.avoidAi.replaceAll(' ', '').split(',') :
+    [];
   const extension = args['extension'] ? args['extension'] : '.ts';
   const exampleSuffix =
     args['exampleSuffix'] === undefined || args['exampleSuffix'] === 'true'; // default: true
@@ -51,13 +52,14 @@ export const validate = async(args) => {
     throw new Error('Unexpected extension!');
   }
 
-  if (!(await fs.existsSync(inputPath))) {
+  if (!(await fs.existsSync(inputPath.replaceAll(' ', '')))) {
     Logger.info(`${inputPath}: No such file or directory`);
-    return null;
+    exit(1);
   }
-  if (!(await fs.existsSync(outputPath))) {
+
+  if (!(await fs.existsSync(outputPath.replaceAll(' ', '')))) {
     Logger.info(`${outputPath}: No such file or directory`);
-    return null;
+    exit(1);
   }
   return {
     inputPath,
@@ -67,6 +69,7 @@ export const validate = async(args) => {
     numberOfData,
     ignoreList,
     extension,
-    exampleSuffix
+    exampleSuffix,
+    avoidAIGenerateList
   };
 };

@@ -22,19 +22,8 @@ export const fetch = async(apiKey, propertyName, n) => {
     return formattedResult;
   } catch (e) {
     Logger.error(
-      `Failed to generate data with "${propertyName}". Please ignore this property with --ignore-ai-generate ${propertyName}`
+      `Failed to generate data with "${propertyName}". Please ignore this property with --avoid-ai ${propertyName}`
     );
     exit(1);
   }
 };
-
-// for test
-// console.log(
-//   await fetch('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', 'id', 3)
-// );
-// console.log(
-//   await fetch('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', 'name', 1)
-// );
-// console.log(
-//   await fetch('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', 'hobby', 3)
-// );
