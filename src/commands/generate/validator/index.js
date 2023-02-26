@@ -1,8 +1,8 @@
 import fs from 'fs';
 
 import {
-  DEFAULT_NUMBER_OF_ARRAY_DATA,
-  MAX_NUMBER_OF_ARRAY_DATA
+	DEFAULT_NUMBER_OF_ARRAY_DATA,
+	MAX_NUMBER_OF_ARRAY_DATA
 } from '../const/index.js';
 import { Logger } from '../logger/index.js';
 
@@ -22,62 +22,63 @@ import { Logger } from '../logger/index.js';
  * @param {*} args
  * @returns {Promise<ValidatedValues>} validated values
  */
-export const validate = async(args) => {
-  const inputPath = args.input;
-  const ai = args['ai'] == 'true' ? true : false; // default: false
-  const apiKey = args['apiKey'];
-  if (ai && apiKey === undefined) {
-    throw new Error(`--api-key is not specified.`);
-  }
-  Logger.syslog('Generating test data with OpenAI..');
+export const validate = async (args) => {
+	const inputPath = args.input;
+	const ai = args['ai'] == 'true' ? true : false; // default: false
+	const apiKey = args['apiKey'];
+	if (ai && apiKey === undefined) {
+		throw new Error(`--api-key is not specified.`);
+	}
+	if (ai && apiKey) {
+		Logger.syslog('Generating test data with OpenAI..');
+	}
+	let stateless = args['stateless'] == 'false' || ai ? false : true; // default: true. if ai mode is true then stateless mode is false
+	const outputPath =
+		args.output.slice(-1) === '/' ? args.output.slice(0, -1) : args.output;
+	const numberOfData = args['numberOfArrayData']
+		? args['numberOfArrayData']
+		: DEFAULT_NUMBER_OF_ARRAY_DATA;
 
-  let stateless = args['stateless'] == 'false' || ai ? false : true; // default: true. if ai mode is true then stateless mode is false
-  const outputPath =
-    args.output.slice(-1) === '/' ? args.output.slice(0, -1) : args.output;
-  const numberOfData = args['numberOfArrayData'] ?
-    args['numberOfArrayData'] :
-    DEFAULT_NUMBER_OF_ARRAY_DATA;
+	if (numberOfData < 1 || numberOfData > MAX_NUMBER_OF_ARRAY_DATA) {
+		throw new Error(
+			`Unexpected number of array test data! 0 < numberOfData < ${MAX_NUMBER_OF_ARRAY_DATA}`
+		);
+	}
+	if (numberOfData > 10 && ai) {
+		throw new Error(
+			`When using ai mode, it is not possible to create more than 10 data`
+		);
+	}
+	const ignoreList = args.ignore
+		? args.ignore.replaceAll(' ', '').split(',')
+		: [];
+	const avoidAIGenerateList = args.avoidAi
+		? args.avoidAi.replaceAll(' ', '').split(',')
+		: [];
+	const extension = args['extension'] ? args['extension'] : '.ts';
+	const exampleSuffix =
+		args['exampleSuffix'] === undefined || args['exampleSuffix'] === 'true'; // default: true
+	if (extension !== '.js' && extension !== '.ts') {
+		throw new Error('Unexpected extension!');
+	}
 
-  if (numberOfData < 1 || numberOfData > MAX_NUMBER_OF_ARRAY_DATA) {
-    throw new Error(
-      `Unexpected number of array test data! 0 < numberOfData < ${MAX_NUMBER_OF_ARRAY_DATA}`
-    );
-  }
-  if (numberOfData > 10 && ai) {
-    throw new Error(
-      `When using ai mode, it is not possible to create more than 10 data`
-    );
-  }
-  const ignoreList = args.ignore ?
-    args.ignore.replaceAll(' ', '').split(',') :
-    [];
-  const avoidAIGenerateList = args.avoidAi ?
-    args.avoidAi.replaceAll(' ', '').split(',') :
-    [];
-  const extension = args['extension'] ? args['extension'] : '.ts';
-  const exampleSuffix =
-    args['exampleSuffix'] === undefined || args['exampleSuffix'] === 'true'; // default: true
-  if (extension !== '.js' && extension !== '.ts') {
-    throw new Error('Unexpected extension!');
-  }
+	if (!(await fs.existsSync(inputPath.replaceAll(' ', '')))) {
+		throw new Error(`${inputPath}: No such file or directory`);
+	}
 
-  if (!(await fs.existsSync(inputPath.replaceAll(' ', '')))) {
-    throw new Error(`${inputPath}: No such file or directory`);
-  }
-
-  if (!(await fs.existsSync(outputPath.replaceAll(' ', '')))) {
-    throw new Error(`${outputPath}: No such file or directory`);
-  }
-  return {
-    inputPath,
-    ai,
-    outputPath,
-    stateless,
-    numberOfData,
-    ignoreList,
-    extension,
-    exampleSuffix,
-    avoidAIGenerateList,
-    apiKey
-  };
+	if (!(await fs.existsSync(outputPath.replaceAll(' ', '')))) {
+		throw new Error(`${outputPath}: No such file or directory`);
+	}
+	return {
+		inputPath,
+		ai,
+		outputPath,
+		stateless,
+		numberOfData,
+		ignoreList,
+		extension,
+		exampleSuffix,
+		avoidAIGenerateList,
+		apiKey
+	};
 };
