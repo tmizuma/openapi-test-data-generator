@@ -3,7 +3,7 @@
 `otdgen`は、YAML 形式の OpenAPI スキーマファイルから JavaScript/TypeScript 形式のテストデータを生成するオープンソースのツールです。`otdgen`は以下 2 つの方法を提供します。
 
 - YAML 形式の OpenAPI スキーマファイルからランダムにテストデータを生成する
-- [OpenAI](https://openai.com/) API を使ってスキーマのプロパティに応じたテストデータを生成する
+- [OpenAI](https://openai.com/) API を使ってスキーマのプロパティに応じたテストデータを生成する (Preview)
 
 ### Reporting Bugs/Feature Requests
 

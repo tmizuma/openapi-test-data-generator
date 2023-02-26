@@ -3,7 +3,7 @@
 `otdgen` is an open-source tool that generates JavaScript/TypeScript format test data from an OpenAPI schema file in YAML format. It offers two choices for users:
 
 - Generate random test data from OpenAPI schema files in YAML format
-- Generate test data according to schema properties using [OpenAI](https://openai.com/) API
+- Generate test data according to schema properties using [OpenAI](https://openai.com/) API (Preview)
 
 ### Reporting Bugs/Feature Requests
 
