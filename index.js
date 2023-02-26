@@ -16,6 +16,7 @@ program
   .option('-s, --stateless <true | false>')
   .option('-es, --example-suffix <true | false>')
   .option('-ai, --ai <true | false>')
+  .option('-api-key, --api-key <OPENAI_KEY>')
   .option(
     '-avoid-ai, --avoid-ai <schema list that does not allow AI to automatically generate data>'
   )

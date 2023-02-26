@@ -6,7 +6,6 @@ export default class ReadFileCommand {
   _context;
   _parsedObject;
   _schemaNameList;
-  _openApiKey;
 
   setContext(context) {
     this._context = context;
@@ -20,27 +19,11 @@ export default class ReadFileCommand {
 
     // read yaml file
     if (parsedObject === null) {
-      Logger.error(`Unexpected yaml parse error occured!`);
-      process.exit(1);
+      throw new Error(`Unexpected yaml parse error occured!`);
     }
     const schemaNameList = createSchemas(parsedObject);
     if (schemaNameList === null) {
-      Logger.error('Unexpected yaml type. Schemas does not exists.');
-      process.exit(1);
-    }
-
-    // read openapi key
-    if (ai && !checkFileExist(path.resolve(process.cwd(), '.otdgenai'))) {
-      Logger.error(`Can not find ${path.resolve(process.cwd(), '.otdgenai')}`);
-      process.exit(1);
-    }
-    if (ai && checkFileExist(path.resolve(process.cwd(), '.otdgenai'))) {
-      const openapiKey = await parse(path.resolve(process.cwd(), '.otdgenai'));
-      if (openapiKey.split.length < 2) {
-        Logger.error('Unexpected openapi key format');
-        process.exit(1);
-      }
-      this._openApiKey = openapiKey.split('=')[1];
+      throw new Error('Unexpected yaml type. Schemas does not exists.');
     }
 
     this._schemaNameList = schemaNameList;
@@ -53,9 +36,5 @@ export default class ReadFileCommand {
 
   getSchemaNameList() {
     return this._schemaNameList;
-  }
-
-  getOpenApiKey() {
-    return this._openApiKey;
   }
 }

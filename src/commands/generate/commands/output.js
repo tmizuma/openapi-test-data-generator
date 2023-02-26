@@ -1,3 +1,4 @@
+import { Logger } from '../logger/index.js';
 import { exportFileBySampleData } from '../utils/index.js';
 
 export default class OutputCommand {
@@ -18,5 +19,6 @@ export default class OutputCommand {
         context.extension
       );
     }
+    Logger.info(`${Object.keys(schemaDataMap).length} files were generated!`);
   }
 }

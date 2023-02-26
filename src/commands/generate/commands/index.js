@@ -22,7 +22,7 @@ export default class Generator {
     await this._readCommand.exec();
     const parsedObject = this._readCommand.getParsedObject();
     const schemaNameList = this._readCommand.getSchemaNameList();
-    const openApiKey = this._readCommand.getOpenApiKey();
+    const openApiKey = this._context.apiKey;
     return { parsedObject, schemaNameList, openApiKey };
   }
 

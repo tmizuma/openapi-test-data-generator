@@ -24,12 +24,14 @@ describe('generate-command', () => {
       numberOfArrayData: 3,
       extension: '.ts'
     });
-    expect(result.size).toBe(3);
-    expect(result.has('Employee')).toBe(true);
-    expect(result.has('Profile')).toBe(true);
-    const employee = result.get('Employee');
-    const profile = result.get('Profile');
-    const member = result.get('Member');
+
+    expect(Object.keys(result).length).toBe(3);
+    expect(result['Employee'] !== undefined).toBe(true);
+    expect(result['Profile'] !== undefined).toBe(true);
+    expect(result['Member'] !== undefined).toBe(true);
+    const employee = result['Employee'];
+    const profile = result['Profile'];
+    const member = result['Member'];
     expect(employee.length).toBe(3);
     expect(profile.length).toBe(3);
     expect(member.length).toBe(3);
