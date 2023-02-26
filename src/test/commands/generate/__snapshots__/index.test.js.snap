@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`generate-command stateless snapshot test 1`] = `
-Map {
-  "Employee" => [
+{
+  "Employee": [
     {
       "companyId": "999_0",
       "department": {
@@ -12,6 +12,7 @@ Map {
       "id": "9c0f76ea11",
       "name": "John Doe_0",
       "profile": {
+        "address": "8ea0be746e",
         "age": 40,
         "birthdate": "2026-08-28",
         "hobby": [
@@ -47,6 +48,7 @@ Map {
       "id": "d1adcc3f59",
       "name": "John Doe_1",
       "profile": {
+        "address": "8ea0be746e",
         "age": 40,
         "birthdate": "2026-08-28",
         "hobby": [
@@ -82,6 +84,7 @@ Map {
       "id": "a7e94f011e",
       "name": "John Doe_2",
       "profile": {
+        "address": "8ea0be746e",
         "age": 40,
         "birthdate": "2026-08-28",
         "hobby": [
@@ -108,40 +111,44 @@ Map {
         },
       ],
     },
+    {
+      "companyId": "999_3",
+      "department": {
+        "employee": "Marketing",
+        "id": "e16f53c14b",
+      },
+      "id": "86fb6b6ecd",
+      "name": "John Doe_3",
+      "profile": {
+        "address": "8ea0be746e",
+        "age": 40,
+        "birthdate": "2026-08-28",
+        "hobby": [
+          "watching movies_0",
+          "watching movies_1",
+          "watching movies_2",
+        ],
+        "sex": "MALE",
+      },
+      "registdate": "2015-04-08 06:06:06",
+      "role": "MANAGER",
+      "submemners": [
+        {
+          "id": "f439ed5e93",
+          "name": "John Doe_0",
+        },
+        {
+          "id": "a2b0b7fbb5",
+          "name": "John Doe_1",
+        },
+        {
+          "id": "f10344e18d",
+          "name": "John Doe_2",
+        },
+      ],
+    },
   ],
-  "Profile" => [
-    {
-      "age": 46,
-      "birthdate": "2011-04-12",
-      "hobby": [
-        "watching movies_0",
-        "watching movies_1",
-        "watching movies_2",
-      ],
-      "sex": "MALE",
-    },
-    {
-      "age": 48,
-      "birthdate": "2017-12-22",
-      "hobby": [
-        "watching movies_0",
-        "watching movies_1",
-        "watching movies_2",
-      ],
-      "sex": "FEMALE",
-    },
-    {
-      "age": 32,
-      "birthdate": "2024-04-09",
-      "hobby": [
-        "watching movies_0",
-        "watching movies_1",
-        "watching movies_2",
-      ],
-      "sex": "ELSE",
-    },
-  ],
-  "Member" => [
+  "Member": [
     {
       "id": "9872cbfc5e",
       "name": "John Doe_0",
@@ -153,6 +160,56 @@ Map {
     {
       "id": "6b97c30085",
       "name": "John Doe_2",
+    },
+    {
+      "id": "7f4daa1615",
+      "name": "John Doe_3",
+    },
+  ],
+  "Profile": [
+    {
+      "address": "b1c6a26652",
+      "age": 46,
+      "birthdate": "2011-04-12",
+      "hobby": [
+        "watching movies_0",
+        "watching movies_1",
+        "watching movies_2",
+      ],
+      "sex": "MALE",
+    },
+    {
+      "address": "f18245b187",
+      "age": 48,
+      "birthdate": "2017-12-22",
+      "hobby": [
+        "watching movies_0",
+        "watching movies_1",
+        "watching movies_2",
+      ],
+      "sex": "FEMALE",
+    },
+    {
+      "address": "d1502ef1d7",
+      "age": 32,
+      "birthdate": "2024-04-09",
+      "hobby": [
+        "watching movies_0",
+        "watching movies_1",
+        "watching movies_2",
+      ],
+      "sex": "ELSE",
+    },
+    {
+      "address": "adcd980af6",
+      "age": 23,
+      "birthdate": "2001-06-13",
+      "hobby": [
+        "watching movies_0",
+        "watching movies_1",
+        "watching movies_2",
+      ],
+      "sex": "MALE",
     },
   ],
 }

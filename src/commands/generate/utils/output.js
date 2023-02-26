@@ -31,7 +31,7 @@ export const exportFileBySampleData = async (
 	);
 	try {
 		await fs.promises.writeFile(`${outputPath}/${fileName}`, code, 'utf8');
-		Logger.info(`output: ==> ${outputPath}/${fileName}`);
+		Logger.info(`✔︎ ${outputPath}/${fileName}`);
 	} catch (e) {
 		Logger.error(`[ERROR]: ==> failed to output ${outputPath}/${fileName}`);
 	}

@@ -6,6 +6,7 @@ export default class Generator {
 	_generatedDataObject;
 
 	constructor(context, readCommand, generateCommand, outputCommand) {
+		this._context = context;
 		this._readCommand = readCommand.setContext(context);
 		this._generateCommand = generateCommand.setContext(context);
 		this._outputCommand = outputCommand.setContext(context);
@@ -20,12 +21,21 @@ export default class Generator {
 	async read() {
 		await this._readCommand.exec();
 		const parsedObject = this._readCommand.getParsedObject();
-		const _schemaNameList = this._readCommand.getSchemaNameList();
-		return { parsedObject, _schemaNameList };
+		const schemaNameList = this._readCommand.getSchemaNameList();
+		const openApiKey = this._context.apiKey;
+		return { parsedObject, schemaNameList, openApiKey };
 	}
 
 	async generate(input) {
-		this._generateCommand.exec(input._schemaNameList, input.parsedObject);
+		this._generateCommand.exec(
+			input.schemaNameList,
+			input.parsedObject,
+			input.openApiKey
+		);
+		await this._generateCommand.replaceStringPropertyDataByOpenAI(
+			input.openApiKey,
+			this._context.numberOfData
+		);
 		return this._generateCommand.getSchemaDataMap();
 	}
 

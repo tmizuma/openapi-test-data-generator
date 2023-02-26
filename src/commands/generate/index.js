@@ -1,5 +1,5 @@
 import { validate } from './validator/index.js';
-import ReadYamlCommand from './commands/readyaml.js';
+import ReadFileCommand from './commands/readfile.js';
 import GenerateDataCommand from './commands/generate-data/index.js';
 import OutputCommand from './commands/output.js';
 import Generator from './commands/index.js';
@@ -14,7 +14,7 @@ export const generate = async (args) => {
 
 	const generator = new Generator(
 		context,
-		new ReadYamlCommand(),
+		new ReadFileCommand(),
 		new GenerateDataCommand(),
 		new OutputCommand()
 	);

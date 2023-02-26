@@ -1,11 +1,13 @@
 import { Type } from '../../../../enum/index.js';
-import { DEFAULT_ARRAY_TYPE_TEST_DATA_LENGTH } from '../../../const/index.js';
+import {
+	DEFAULT_ARRAY_TYPE_TEST_DATA_LENGTH,
+	NEED_TO_BE_REPLACE_BY_OPENAI_RESPONSE
+} from '../../../const/index.js';
 
 export const generateArrayTypeData = (
 	schemas,
 	property,
 	stateless,
-	exampleSuffix,
 	options,
 	depthOfSchemaRefRecursion,
 	statelessHashKey,
@@ -17,8 +19,7 @@ export const generateArrayTypeData = (
 	}
 	const array = [];
 	for (let k = 0; k < DEFAULT_ARRAY_TYPE_TEST_DATA_LENGTH; k++) {
-		const suffix = exampleSuffix ? `_${k}` : '';
-
+		const suffix = options.exampleSuffix ? `_${k}` : '';
 		// array of ref
 		if (property.items.$ref) {
 			const targetSchemaName = property.items.$ref.replace(
@@ -39,7 +40,6 @@ export const generateArrayTypeData = (
 			}
 			continue;
 		}
-
 		// array of object
 		if (property.items.type === Type.OBJECT) {
 			array.push(
@@ -53,17 +53,16 @@ export const generateArrayTypeData = (
 			);
 			continue;
 		}
-
 		// otherwise
-		array.push(
-			cbGenerateDataFromPropertyType(
-				property.items,
-				stateless,
-				options,
-				depthOfSchemaRefRecursion,
-				`${statelessHashKey}-${k}`
-			) + suffix
+		let value = cbGenerateDataFromPropertyType(
+			{ ...property.items, key: property.key },
+			stateless,
+			options,
+			depthOfSchemaRefRecursion,
+			`${statelessHashKey}-${k}`
 		);
+		if (value !== NEED_TO_BE_REPLACE_BY_OPENAI_RESPONSE) value += suffix;
+		array.push(value);
 	}
 	return array;
 };

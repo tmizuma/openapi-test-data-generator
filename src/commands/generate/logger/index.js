@@ -1,5 +1,9 @@
 import chalk from 'chalk';
 export const Logger = {
+	syslog: (msg) => {
+		if (process.env.NODE_ENV === 'test') return;
+		console.log(chalk.gray.bold(msg));
+	},
 	info: (msg) => {
 		if (process.env.NODE_ENV === 'test') return;
 		console.log(chalk.green.bold(msg));

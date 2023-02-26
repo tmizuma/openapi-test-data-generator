@@ -1,6 +1,6 @@
 {
   "name": "otdgen",
-  "version": "1.3.4",
+  "version": "3.0.0",
   "description": "The script outputs test data from the OpenApi schema file to the folder specified by the argument.",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,7 @@
   "license": "MIT",
   "keywords": [
     "otdgen",
+    "openai",
     "generator",
     "openapi",
     "api",
@@ -35,7 +36,10 @@
     }
   },
   "dependencies": {
+    "ansi-colors": "^4.1.3",
+    "axios": "^1.3.4",
     "chalk": "^4.1.0",
+    "cli-progress": "^3.12.0",
     "commander": "^9.4.1",
     "conf": "^10.2.0",
     "ejs": "^3.1.8",
