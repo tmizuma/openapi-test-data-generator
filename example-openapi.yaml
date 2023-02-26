@@ -47,6 +47,8 @@ components:
       title: Profile
       type: object
       properties:
+        family_name:
+          type: string
         age:
           type: number
           minimum: 18

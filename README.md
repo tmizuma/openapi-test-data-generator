@@ -1,9 +1,9 @@
-# API test data generator with OpenAI (otdgen)
+# otdgen: API Test Data Generator with OpenAI
 
-`otdgen` is an open-source tool that generates JavaScript/TypeScript format test data from an OpenAPI schema file in YAML format. It offers two choices for users:
+[otdgen](https://www.npmjs.com/package/otdgen) is an open-source tool that generates JavaScript/TypeScript test data from an OpenAPI schema file in YAML format. It provides two options for users:
 
-- Generate random test data from OpenAPI schema files in YAML format
-- Generate test data according to schema properties using [OpenAI](https://openai.com/) API
+Generate random test data from an OpenAPI schema file in YAML format
+Generate test data using OpenAI to generate text data for specific schema properties
 
 ### Reporting Bugs/Feature Requests
 
@@ -11,7 +11,7 @@
 
 ### Installation
 
-You can install otdgen via npm:
+Install otdgen via npm:
 
 ```bash
 $ npm install otdgen
@@ -19,32 +19,30 @@ $ npm install otdgen
 
 ### Usage
 
-To use otdgen, you need
-
-- OpenAPI schema file in YAML format.
-- API KEY for OpenAI
+To use otdgen, you'll need an OpenAPI schema file in YAML format and an OpenAI API KEY.
 
 ```bash
 $ mkdir output # create output folder for test data
-$ otdgen generate -i example-openapi.yaml -o output/ -ai true -api-key "sk-xxx..."
+$ otdgen generate -i example-openapi.yaml -o output/ -ai true -api-key <Your API_KEY>
 ```
 
 Example file: [example-openapi.yaml](./example-openapi.yaml)
 
-<details><summary>Output</summary><div>
+<details><summary>Output1. Employee.ts</summary><div>
 
 ```ts
 //  This file was automatically generated and should not be edited.
 export const employee = {
 	id: '12345',
-	companyId: 282168,
+	companyId: 293093,
 	role: 'MANAGER',
 	name: 'John Doe',
-	registdate: '2008-12-12 08:46:41',
+	registdate: '2017-01-27 05:10:29',
 	profile: {
-		age: 24,
+		family_name: 'Smith',
+		age: 33,
 		address: '123 Main Street, Anytown, USA',
-		birthdate: '2015-02-02',
+		birthdate: '2003-12-13',
 		sex: 'MALE',
 		hobby: ['Playing the guitar', 'Painting', 'Gardening']
 	},
@@ -70,14 +68,15 @@ export const employee = {
 // employee is the same as employee_0
 const employee0 = {
 	id: '12345',
-	companyId: 282168,
+	companyId: 293093,
 	role: 'MANAGER',
 	name: 'John Doe',
-	registdate: '2008-12-12 08:46:41',
+	registdate: '2017-01-27 05:10:29',
 	profile: {
-		age: 24,
+		family_name: 'Smith',
+		age: 33,
 		address: '123 Main Street, Anytown, USA',
-		birthdate: '2015-02-02',
+		birthdate: '2003-12-13',
 		sex: 'MALE',
 		hobby: ['Playing the guitar', 'Painting', 'Gardening']
 	},
@@ -102,14 +101,15 @@ const employee0 = {
 };
 const employee1 = {
 	id: '67890',
-	companyId: 318130,
+	companyId: 918270,
 	role: 'ENGINEER',
 	name: 'Jane Smith',
-	registdate: '2001-03-04 21:03:25',
+	registdate: '2021-02-08 06:33:25',
 	profile: {
-		age: 33,
+		family_name: 'Johnson',
+		age: 20,
 		address: '456 Maple Avenue, Anytown, USA',
-		birthdate: '2018-03-29',
+		birthdate: '2020-02-28',
 		sex: 'MALE',
 		hobby: ['Playing the guitar', 'Painting', 'Gardening']
 	},
@@ -134,14 +134,15 @@ const employee1 = {
 };
 const employee2 = {
 	id: 'abcde',
-	companyId: 367469,
+	companyId: 943744,
 	role: 'ASSISTANT',
 	name: 'Jack Johnson',
-	registdate: '2006-07-21 11:16:18',
+	registdate: '2006-01-26 05:22:12',
 	profile: {
-		age: 28,
+		family_name: 'Williams',
+		age: 33,
 		address: '789 Oak Street, Anytown, USA',
-		birthdate: '2017-06-13',
+		birthdate: '2008-03-25',
 		sex: 'MALE',
 		hobby: ['Playing the guitar', 'Painting', 'Gardening']
 	},
@@ -166,8 +167,14 @@ const employee2 = {
 };
 
 export const employeeList = [employee0, employee1, employee2];
+```
 
-// This file was automatically generated and should not be edited.
+</div></details>
+
+<details><summary>Output2. Member.ts</summary><div>
+
+```ts
+//  This file was automatically generated and should not be edited.
 export const member = {
 	id: '12345',
 	name: 'John Doe'
@@ -187,34 +194,44 @@ const member2 = {
 };
 
 export const memberList = [member0, member1, member2];
+```
 
-// This file was automatically generated and should not be edited.
+</div></details>
+
+<details><summary>Output3. Profile.ts</summary><div>
+
+```ts
+//  This file was automatically generated and should not be edited.
 export const profile = {
-	age: 36,
+	family_name: 'Smith',
+	age: 38,
 	address: '123 Main Street, Anytown, USA',
-	birthdate: '2020-07-08',
+	birthdate: '2002-07-23',
 	sex: 'MALE',
 	hobby: ['Playing the guitar', 'Painting', 'Gardening']
 };
 // profile is the same as profile_0
 const profile0 = {
-	age: 36,
+	family_name: 'Smith',
+	age: 38,
 	address: '123 Main Street, Anytown, USA',
-	birthdate: '2020-07-08',
+	birthdate: '2002-07-23',
 	sex: 'MALE',
 	hobby: ['Playing the guitar', 'Painting', 'Gardening']
 };
 const profile1 = {
-	age: 18,
+	family_name: 'Johnson',
+	age: 28,
 	address: '456 Maple Avenue, Anytown, USA',
-	birthdate: '2012-04-11',
+	birthdate: '2015-07-26',
 	sex: 'FEMALE',
 	hobby: ['Playing the guitar', 'Painting', 'Gardening']
 };
 const profile2 = {
-	age: 38,
+	family_name: 'Williams',
+	age: 43,
 	address: '789 Oak Street, Anytown, USA',
-	birthdate: '2009-12-03',
+	birthdate: '2000-10-07',
 	sex: 'ELSE',
 	hobby: ['Playing the guitar', 'Painting', 'Gardening']
 };
@@ -224,25 +241,21 @@ export const profileList = [profile0, profile1, profile2];
 
 </div></details>
 
-In this example, AI generates test data for the four properties [`id`,`name`,`address`,`hobby`].
-The important thing is **AI generates test data only for string type.** Otherwise, it generates random values from the attribute values (e.g. minimum, maximum, enum) specified in each schema.
+In this example, AI generates test data for the five properties [`id`,`name`,`family_name`,`address`,`hobby`].
+It's important to note that **OpenAI generates test data only for string types.** Otherwise, otdgen generates random values from the attribute values (e.g., minimum, maximum, enum) specified in each schema.
 
 ```ts
 export const profile = {
-	age: 36, // randomly generated by value of type int
-	address: '123 Main Street, Anytown, USA', // generated by !!
-	birthdate: '2020-07-08', // randomly generated by date-time value
-	sex: 'MALE', // randomly generated with the value specified in enum
-	hobby: [
-		'Playing the guitar', // generated by OpenAI!!
-		'Painting', // generated by OpenAI!!
-		'Gardening' // generated by OpenAI!!
-	]
+	family_name: 'Smith', // generated by OpenAI!!
+	age: 38, // random value between minimum and maximum
+	address: '123 Main Street, Anytown, USA', // generated by OpenAI!!
+	birthdate: '2002-07-23', // random value
+	sex: 'MALE', // random value from enum definition
+	hobby: ['Playing the guitar', 'Painting', 'Gardening'] // generated by OpenAI!!
 };
 ```
 
-This will output generated test data to `output/` folder.
-If the `-ai` option is not specified, otdgen will generate random test data.
+`otdgen` generates test data in the output/ folder. If the `-ai` option is not specified, `otdgen` generates random test data.
 
 ```bash
 # generate test data randomly without OpenAI
@@ -251,18 +264,18 @@ $ otdgen generate -i example-openapi.yaml -o output/
 
 ### Options
 
-| Options                                       | Description                                                                                                                                                                                                                                                                           |             Default             | Required |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-----------------------------: | :------: |
-| -i, --input \<file path\>                     | The path of OpenAPI schema file in YAML format file                                                                                                                                                                                                                                   |                -                |    ●     |
-| -o, --output \<output folder path\>           | Output folder for test data folder                                                                                                                                                                                                                                                    |                -                |    ●     |
-| -n, --number-of-array-data \<test data size\> | Test Data size. <br/>\*Limited to a maximum of 10 cases when using the `-ai` option                                                                                                                                                                                                   |                3                |    -     |
-| -ext, --extension \<output file extension\>   | output file extension `.ts` \| `.js`                                                                                                                                                                                                                                                  |              `.ts`              |    -     |
-| -ignore, --ignore \<ignore schema list\>      | Schema list that does not generate test data. Please specify comma-separated. <br/> `e.g) -ignore Employee,Profile`                                                                                                                                                                   |                -                |    -     |
-| -s, --stateless \<true \| false\>             | Setting this option to `true` ensures power equality of random data; it is strongly recommended to set this option to `true` when using Unit or snapshot tests. <br/> \*If ai option is true, this option will be disabled.                                                           | true / false (if `-ai` is true) |    -     |
-| -ai, --ai                                     | OpenAI will generate the appropriate test data from the schema property names such as hobby, company name, family name. If this option is set to true, then `-api-key` must be specified.                                                                                             |              false              |    -     |
-| -api-key, --api-key                           | OpenAPI KEY                                                                                                                                                                                                                                                                           |              false              |    -     |
-| -avoid-ai, ---avoid-ai                        | This option can be specified when the `-ai` option is true. otdgen depends on the OpenAPI response, therefore errors may occur with certain property names. In that case, disable the target property using this option where the error occurred.(e.g `-avoid-ai hobby,company_name`) |              false              |    -     |
-| -es, --example-suffix \<true \| false\>       | If the example attribute exists in yaml, whether or not the suffix is added to the test data. This attribute `-ai` is ignored if the option is true.                                                                                                                                  |              true               |    -     |
+| Options                                       | Description                                                                                                                                                                                                                                                                      |                  Default                  | Required |
+| --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------: | :------: |
+| -i, --input \<file path\>                     | The path to the OpenAPI schema file in YAML format                                                                                                                                                                                                                               |                     -                     |    ●     |
+| -o, --output \<output folder path\>           | The output folder for test data folder                                                                                                                                                                                                                                           |                     -                     |    ●     |
+| -n, --number-of-array-data \<test data size\> | The size of the test data. This option is limited to a maximum of 10 cases when using the `-ai true` option.                                                                                                                                                                     |                     3                     |    -     |
+| -ext, --extension \<output file extension\>   | The output file extension: `.ts` or `.js`.                                                                                                                                                                                                                                       |                   `.ts`                   |    -     |
+| -ignore, --ignore \<ignore schema list\>      | A list of schemas that should not generate test data. Please specify comma-separated values. For example: `-ignore Employee,Profile`                                                                                                                                             |                     -                     |    -     |
+| -s, --stateless \<true \| false\>             | Setting this option to true ensures that the generated test data is reproducible and has the same values across multiple test runs. This option is strongly recommended when using unit or snapshot tests. Please note that this option is disabled when using the `-ai` option. | true (if `-ai` is not specified or false) |    -     |
+| -ai, --ai                                     | This option enables the OpenAI feature, which generates appropriate test data from the schema property names such as hobby, company name, and family name. Please note that you need to provide an API key if you use this option.                                               |                   false                   |    -     |
+| -api-key, --api-key                           | If you use the `-ai` option, you must provide your OpenAI API key here.                                                                                                                                                                                                          |                   false                   |    -     |
+| -avoid-ai, ---avoid-ai                        | This option can be specified when the `-ai` option is true. When using the OpenAI feature, some property names may cause errors. In that case, you can use this option to disable specific properties. For example: `-avoid-ai hobby,company_name`                               |                   false                   |    -     |
+| -es, --example-suffix \<true \| false\>       | This option controls whether or not to add the suffix to the test data if the example attribute exists in the YAML file. If this option is true, the `-ai` option is ignored.                                                                                                    | true (if `-ai` is not specified or false) |    -     |
 
 ### Contributor
 
