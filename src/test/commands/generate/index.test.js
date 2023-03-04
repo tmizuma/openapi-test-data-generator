@@ -45,10 +45,13 @@ describe('generate-command', () => {
 		});
 		expect(fs.existsSync(`${outputFilesPath}/Employee.ts`)).toBe(true);
 		expect(fs.existsSync(`${outputFilesPath}/Profile.ts`)).toBe(true);
+		expect(fs.existsSync(`${outputFilesPath}/Member.ts`)).toBe(true);
 		expect(fs.existsSync(`${outputFilesPath}/Employee.js`)).toBe(false);
 		expect(fs.existsSync(`${outputFilesPath}/Profile.js`)).toBe(false);
 		expect(fs.existsSync(`${outputFilesPath}/Member.js`)).toBe(false);
-		expect(fs.existsSync(`${outputFilesPath}/Member.js`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Employee.json`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Profile.json`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Member.json`)).toBe(false);
 	});
 	test('Check if there are correct extension(.js) files', async () => {
 		await generate({
@@ -59,9 +62,54 @@ describe('generate-command', () => {
 		});
 		expect(fs.existsSync(`${outputFilesPath}/Employee.ts`)).toBe(false);
 		expect(fs.existsSync(`${outputFilesPath}/Profile.ts`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Member.ts`)).toBe(false);
 		expect(fs.existsSync(`${outputFilesPath}/Employee.js`)).toBe(true);
 		expect(fs.existsSync(`${outputFilesPath}/Profile.js`)).toBe(true);
 		expect(fs.existsSync(`${outputFilesPath}/Member.js`)).toBe(true);
+		expect(fs.existsSync(`${outputFilesPath}/Employee.json`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Profile.json`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Member.json`)).toBe(false);
+	});
+
+	test('Check if there are correct extension(.json) files', async () => {
+		await generate({
+			input: `${__dirname}/test-data/openapi-snapshot.yaml`,
+			output: outputFilesPath,
+			numberOfArrayData: 3,
+			extension: '.json'
+		});
+		expect(fs.existsSync(`${outputFilesPath}/Employee.ts`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Profile.ts`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Member.ts`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Employee.js`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Profile.js`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Member.js`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Employee.json`)).toBe(true);
+		expect(fs.existsSync(`${outputFilesPath}/Profile.json`)).toBe(true);
+		expect(fs.existsSync(`${outputFilesPath}/Member.json`)).toBe(true);
+	});
+
+	test('process.exit(1) will be called when unexpected extension is specified', async () => {
+		const mockExit = jest.spyOn(process, 'exit').mockImplementation((_) => {
+			/* process.exit(1) */
+		});
+		await generate({
+			input: `${__dirname}/test-data/openapi-snapshot.yaml`,
+			output: outputFilesPath,
+			numberOfArrayData: 3,
+			extension: '.unexpected'
+		});
+		expect(mockExit).toHaveBeenCalledWith(1);
+		mockExit.mockRestore();
+		expect(fs.existsSync(`${outputFilesPath}/Employee.ts`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Profile.ts`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Member.ts`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Employee.js`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Profile.js`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Member.js`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Employee.json`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Profile.json`)).toBe(false);
+		expect(fs.existsSync(`${outputFilesPath}/Member.json`)).toBe(false);
 	});
 
 	test('-ignore option', async () => {
