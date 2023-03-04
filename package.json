@@ -1,6 +1,6 @@
 {
   "name": "otdgen",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "The script outputs test data from the OpenApi schema file to the folder specified by the argument.",
   "main": "index.js",
   "scripts": {
