@@ -21,7 +21,7 @@ export const exportFileBySampleData = async (
 	const fileName = `${name}${extension}`;
 	let code;
 	if (extension === '.json') {
-		code = JSON.stringify(properties);
+		code = JSON.stringify(properties, null, '\t');
 	} else {
 		code = ejs.render(
 			fs.readFileSync(
