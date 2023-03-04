@@ -19,11 +19,13 @@ export default class ReadFileCommand {
 
 		// read yaml file
 		if (parsedObject === null) {
-			throw new Error(`Unexpected yaml parse error occured!`);
+			Logger.error('Unexpected yaml parse error occured!');
+			process.exit(1);
 		}
 		const schemaNameList = createSchemas(parsedObject);
 		if (schemaNameList === null) {
-			throw new Error('Unexpected yaml type. Schemas does not exists.');
+			Logger.error('Unexpected yaml type. Schemas does not exists.');
+			process.exit(1);
 		}
 
 		this._schemaNameList = schemaNameList;

@@ -19,16 +19,21 @@ export const exportFileBySampleData = async (
 	extension
 ) => {
 	const fileName = `${name}${extension}`;
-	const code = ejs.render(
-		fs.readFileSync(
-			path.resolve(process.cwd(), `${__dirname}/../template/test_data.ejs`),
-			'utf-8'
-		),
-		{
-			name: capitalize(name),
-			properties
-		}
-	);
+	let code;
+	if (extension === '.json') {
+		code = JSON.stringify(properties);
+	} else {
+		code = ejs.render(
+			fs.readFileSync(
+				path.resolve(process.cwd(), `${__dirname}/../template/test_data.ejs`),
+				'utf-8'
+			),
+			{
+				name: capitalize(name),
+				properties
+			}
+		);
+	}
 	try {
 		await fs.promises.writeFile(`${outputPath}/${fileName}`, code, 'utf8');
 		Logger.info(`✔︎ ${outputPath}/${fileName}`);

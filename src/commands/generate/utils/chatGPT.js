@@ -21,8 +21,9 @@ export const fetch = async (apiKey, propertyName, n) => {
 		const formattedResult = JSON.parse(result.data.choices[0].text);
 		return formattedResult;
 	} catch (e) {
-		throw new Error(
-			`Failed to generate data with "${propertyName}". Please ignore this property with --avoid-ai ${propertyName}`
+		Logger.error(
+			'Failed to generate data with "${propertyName}". Please ignore this property with --avoid-ai ${propertyName}'
 		);
+		process.exit(1);
 	}
 };

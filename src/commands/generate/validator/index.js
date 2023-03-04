@@ -27,7 +27,8 @@ export const validate = async (args) => {
 	const ai = args['ai'] == 'true' ? true : false; // default: false
 	const apiKey = args['apiKey'];
 	if (ai && apiKey === undefined) {
-		throw new Error(`--api-key is not specified.`);
+		Logger.error('--api-key is not specified.');
+		process.exit(1);
 	}
 	if (ai && apiKey) {
 		Logger.syslog('Generating test data with OpenAI..');
@@ -40,14 +41,16 @@ export const validate = async (args) => {
 		: DEFAULT_NUMBER_OF_ARRAY_DATA;
 
 	if (numberOfData < 1 || numberOfData > MAX_NUMBER_OF_ARRAY_DATA) {
-		throw new Error(
+		Logger.error(
 			`Unexpected number of array test data! 0 < numberOfData < ${MAX_NUMBER_OF_ARRAY_DATA}`
 		);
+		process.exit(1);
 	}
 	if (numberOfData > 10 && ai) {
-		throw new Error(
+		Logger.error(
 			`When using ai mode, it is not possible to create more than 10 data`
 		);
+		process.exit(1);
 	}
 	const ignoreList = args.ignore
 		? args.ignore.replaceAll(' ', '').split(',')
@@ -58,16 +61,19 @@ export const validate = async (args) => {
 	const extension = args['extension'] ? args['extension'] : '.ts';
 	const exampleSuffix =
 		args['exampleSuffix'] === undefined || args['exampleSuffix'] === 'true'; // default: true
-	if (extension !== '.js' && extension !== '.ts') {
-		throw new Error('Unexpected extension!');
+	if (extension !== '.js' && extension !== '.ts' && extension !== '.json') {
+		Logger.error('Unexpected extension. Please specify .js | .ts | .json');
+		process.exit(1);
 	}
 
 	if (!(await fs.existsSync(inputPath.replaceAll(' ', '')))) {
-		throw new Error(`${inputPath}: No such file or directory`);
+		Logger.error(`${inputPath}: No such file or directory`);
+		process.exit(1);
 	}
 
 	if (!(await fs.existsSync(outputPath.replaceAll(' ', '')))) {
-		throw new Error(`${outputPath}: No such file or directory`);
+		Logger.error(`${outputPath}: No such file or directory`);
+		process.exit(1);
 	}
 	return {
 		inputPath,
