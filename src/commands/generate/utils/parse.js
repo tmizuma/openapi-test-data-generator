@@ -3,7 +3,7 @@ import fs from 'fs';
 import yaml from 'js-yaml';
 
 export const parse = (fullPath) => {
-	const yamlText = fs.readFileSync(fullPath.replaceAll(' ', ''), 'utf8');
+	const yamlText = fs.readFileSync(fullPath.trim(), 'utf8');
 	return yaml.load(yamlText);
 };
 
