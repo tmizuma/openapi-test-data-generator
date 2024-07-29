@@ -5,7 +5,7 @@ export const fetch = async (apiKey, propertyName, n) => {
 	const endpoint = 'https://api.openai.com/v1/completions';
 	const params = {
 		prompt: `Given the article below, create a ${n} sample string value which property value is ${propertyName}. The result should be in this format: [ "sample string 1", "sample strint 2" ]`,
-		model: 'text-davinci-003',
+		model: 'gpt-3.5-turbo-instruct',
 		max_tokens: 1000,
 		temperature: 0
 	};
