@@ -146,4 +146,26 @@ describe('generate-command', () => {
 		});
 		expect(result).toMatchSnapshot();
 	});
+
+	test('OpenAPI 3.1 fixture with nested response array refs', async () => {
+		const result = await generate({
+			input: `${__dirname}/test-data/xquik-social-openapi.yaml`,
+			output: outputFilesPath,
+			numberOfArrayData: 2,
+			extension: '.json',
+			stateless: 'true'
+		});
+
+		expect(Object.keys(result).sort()).toEqual([
+			'CreateTweetRequest',
+			'Tweet',
+			'TweetSearchResponse'
+		]);
+		expect(result.Tweet).toHaveLength(2);
+		expect(result.TweetSearchResponse).toHaveLength(2);
+		expect(result.TweetSearchResponse[0].data).toHaveLength(3);
+		expect(result.TweetSearchResponse[0].data[0]).toHaveProperty('id');
+		expect(result.TweetSearchResponse[0].data[0]).toHaveProperty('text');
+		expect(fs.existsSync(`${outputFilesPath}/TweetSearchResponse.json`)).toBe(true);
+	});
 });
