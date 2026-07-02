@@ -1,0 +1,56 @@
+openapi: 3.1.0
+info:
+  title: Xquik Social API Fixture
+  version: "1.0"
+components:
+  schemas:
+    CreateTweetRequest:
+      type: object
+      required:
+        - text
+      properties:
+        text:
+          type: string
+          minLength: 1
+          example: "hello from xquik"
+    Tweet:
+      type: object
+      required:
+        - id
+        - text
+      properties:
+        id:
+          type: string
+          example: "tw_123"
+        text:
+          type: string
+          example: "hello from xquik"
+        likeCount:
+          type: integer
+          minimum: 0
+    TweetSearchResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Tweet"
+paths:
+  /api/v1/x/tweets/search:
+    get:
+      operationId: searchTweets
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Tweet search results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TweetSearchResponse"
